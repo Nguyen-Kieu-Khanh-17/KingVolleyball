@@ -6,6 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-only-change-me-before-deploy')
 DEBUG = os.environ.get('DJANGO_DEBUG', '1').lower() in ('1', 'true', 'yes')
 
+# Cấu hình ALLOWED_HOSTS
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get(
@@ -14,6 +15,19 @@ ALLOWED_HOSTS = [
     ).split(',')
     if host.strip()
 ]
+
+# Cấu hình CSRF_TRUSTED_ORIGINS dựa trên các host được phép
+CSRF_TRUSTED_ORIGINS = [
+    f"https://{host}" if not host.startswith("http") else host
+    for host in ALLOWED_HOSTS
+    # Loại trừ localhost hoặc IP nội bộ nếu chạy http, chỉ lấy các domain/IP public hoặc format chuẩn https
+    if host != 'localhost' and host != '127.0.0.1'
+]
+
+# (Hoặc nếu bạn muốn viết gọn và cứng luôn cho Render thì dùng cách dưới đây):
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://kingvolleyball.onrender.com',
+# ]
 
 
 INSTALLED_APPS = [
