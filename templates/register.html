@@ -1,61 +1,121 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Đăng ký | King Volleyball{% endblock %}
 
 {% block content %}
-<section class="auth-page auth-page-register">
-  <div class="auth-layout">
-    <div class="auth-intro">
-      <span class="auth-eyebrow"><i class="fa-solid fa-volleyball"></i> KING VOLLEYBALL</span>
-      <h1>Bắt đầu hành trình<br>của bạn.</h1>
-      <p>Tạo tài khoản miễn phí để mua sắm đồ bóng chuyền và theo dõi các sản phẩm yêu thích.</p>
-      <div class="auth-points">
-        <span><i class="fa-solid fa-check-circle"></i> Đăng ký nhanh chóng</span>
-        <span><i class="fa-solid fa-check-circle"></i> Quản lý đơn hàng thuận tiện</span>
-      </div>
-    </div>
-
-    <div class="auth-card">
-      <div class="auth-card-heading">
-        <span class="auth-icon"><i class="fa-solid fa-user-plus"></i></span>
-        <div><h2>Tạo tài khoản</h2><p>Điền thông tin để tham gia King Volleyball</p></div>
-      </div>
-
-      {% if form.non_field_errors %}<div class="alert alert-danger" role="alert">{{ form.non_field_errors|striptags }}</div>{% endif %}
-      <form method="post" action="{% url 'register' %}" novalidate>
-        {% csrf_token %}
-        {% for field in form %}
-          <div class="mb-3">
-            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-            <div class="password-wrap">
-              {{ field }}
-              {% if field.name == 'password1' or field.name == 'password2' %}
-                <button class="password-toggle" type="button" data-toggle-password="{{ field.id_for_label }}" aria-label="Hiện mật khẩu"><i class="fa-regular fa-eye"></i></button>
-              {% endif %}
+<div class="container my-5">
+    <div class="row justify-content-center align-items-center g-5">
+        <!-- Cột thông tin giới thiệu (bên trái) -->
+        <div class="col-lg-6">
+            <span class="badge bg-secondary mb-2">KING VOLLEYBALL</span>
+            <h1 class="display-4 fw-bold mb-3">Tham gia<br>cùng chúng tôi!</h1>
+            <p class="lead text-muted mb-4">
+                Tạo tài khoản ngay để trải nghiệm mua sắm các sản phẩm bóng chuyền chính hãng, theo dõi đơn hàng và nhận những ưu đãi hấp dẫn.
+            </p>
+            <div class="d-flex flex-column gap-2 text-dark fw-bold">
+                <div><i class="bi bi-check-circle-fill text-success"></i> Đăng ký nhanh chóng và miễn phí</div>
+                <div><i class="bi bi-check-circle-fill text-success"></i> Quản lý đơn hàng dễ dàng</div>
+                <div><i class="bi bi-check-circle-fill text-success"></i> Nhận thông tin khuyến mãi độc quyền</div>
             </div>
-            {% if field.help_text and field.name == 'password1' %}<div class="field-help">Mật khẩu nên có ít nhất 8 ký tự và không quá dễ đoán.</div>{% endif %}
-            {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
-          </div>
-        {% endfor %}
-        <button type="submit" class="btn auth-submit"><span>Đăng ký tài khoản</span><i class="fa-solid fa-arrow-right"></i></button>
-      </form>
-      <p class="auth-switch">Đã có tài khoản? <a href="{% url 'login' %}">Đăng nhập tại đây</a></p>
-      <p class="auth-security"><i class="fa-solid fa-shield-halved"></i> Không chia sẻ mật khẩu của bạn với bất kỳ ai.</p>
-    </div>
-  </div>
-</section>
-{% endblock %}
+        </div>
 
-{% block extra_js %}
+        <!-- Cột Form đăng ký (bên phải) -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm p-4 rounded-4">
+                <div class="card-body">
+                    <h3 class="card-title fw-bold mb-1">Đăng ký tài khoản</h3>
+                    <p class="text-muted small mb-4">Điền thông tin bên dưới để tạo tài khoản mới</p>
+
+                    <!-- Hiển thị thông báo (messages) nếu có -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Vui lòng kiểm tra lại thông tin nhập vào bên dưới.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="username" class="form-label fw-bold">Tên đăng nhập</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                        </div>
+
+                        <!-- Ô Mật khẩu 1 tích hợp nút con mắt -->
+                        <div class="mb-3">
+                            <label for="password1" class="form-label fw-bold">Mật khẩu</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password1" name="password1" placeholder="Nhập mật khẩu" required>
+                                <button class="btn btn-outline-secondary toggle-pwd" type="button" data-target="password1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Ô Xác nhận mật khẩu tích hợp nút con mắt -->
+                        <div class="mb-3">
+                            <label for="password2" class="form-label fw-bold">Xác nhận mật khẩu</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password2" name="password2" placeholder="Nhập lại mật khẩu" required>
+                                <button class="btn btn-outline-secondary toggle-pwd" type="button" data-target="password2">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 my-4">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                                Đăng ký ngay <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <p class="text-center mb-3">
+                        Bạn đã có sẵn tài khoản? <a href="{% url 'login' %}" class="text-decoration-none fw-bold">Đăng nhập</a>
+                    </p>
+
+                    <hr class="my-3">
+
+                    <p class="text-muted small text-center mb-0">
+                        <i class="bi bi-shield-check"></i> Thông tin của bạn được bảo mật an toàn.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script xử lý ẩn/hiện mật khẩu cho trang Đăng ký -->
 <script>
-  document.querySelectorAll('[data-toggle-password]').forEach(function (button) {
-    button.addEventListener('click', function () {
-      const input = document.getElementById(button.dataset.togglePassword);
-      if (!input) return;
-      input.type = input.type === 'password' ? 'text' : 'password';
-      button.innerHTML = input.type === 'password' ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>';
-      button.setAttribute('aria-label', input.type === 'password' ? 'Hiện mật khẩu' : 'Ẩn mật khẩu');
+    document.querySelectorAll('.toggle-pwd').forEach(button => {
+        button.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-target');
+            const passwordInput = document.getElementById(targetId);
+            const icon = this.querySelector('i');
+
+            if (passwordInput) {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                icon.classList.toggle('bi-eye');
+                icon.classList.toggle('bi-eye-slash');
+            }
+        });
     });
-  });
 </script>
 {% endblock %}
