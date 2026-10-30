@@ -293,6 +293,14 @@
 
                 <!-- TAB 3: NGƯỜI DÙNG -->
                 <div class="tab-pane fade" id="users-pane" role="tabpanel">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0 text-muted">Danh sách thành viên & Quản trị viên</h6>
+                        {% if request.user.is_superuser %}
+                        <button type="button" class="btn btn-sm btn-warning fw-bold px-3" data-bs-toggle="modal" data-bs-target="#createAdminModal">
+                            <i class="fas fa-user-plus me-1"></i> Thêm tài khoản Quản trị mới
+                        </button>
+                        {% endif %}
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
                             <thead class="table-light">
@@ -387,7 +395,48 @@
 
             </div>
         </div>
-    </div>
+</div>
 
+<!-- MODAL TẠO TÀI KHOẢN ADMIN MỚI -->
+<div class="modal fade" id="createAdminModal" tabindex="-1" aria-labelledby="createAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
+            <div class="modal-header bg-dark text-white p-4">
+                <h5 class="modal-title fw-bold" id="createAdminModalLabel">
+                    <i class="fas fa-user-shield text-warning me-2"></i>Thêm Tài Khoản Quản Trị Mới
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'create_admin_user' %}">
+                {% csrf_token %}
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Tên đăng nhập <span class="text-danger">*</span></label>
+                        <input type="text" name="username" class="form-control" placeholder="VD: manager1, admin_shop" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="admin@domain.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Mật khẩu khởi tạo <span class="text-danger">*</span></label>
+                        <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu cho tài khoản" required>
+                    </div>
+                    <div class="form-check form-switch mt-3">
+                        <input class="form-check-input" type="checkbox" name="is_superuser" id="isSuperuserCheck">
+                        <label class="form-check-label fw-bold small" for="isSuperuserCheck">
+                            Cấp quyền Super Admin (Quản trị viên tối cao)
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light p-3">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-warning fw-bold px-4">
+                        <i class="fas fa-check me-1"></i> Tạo tài khoản
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

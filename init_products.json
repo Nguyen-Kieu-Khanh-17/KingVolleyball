@@ -8,7 +8,8 @@
     "rating": 4.5,
     "sold_count": 0,
     "is_featured": true,
-    "description": "Bộ đồ chất liệu vải thoải mái và thoáng mát, thoải mái tự do hoạt động mạnh và siêu bền"
+    "description": "Bộ đồ chất liệu vải thoải mái và thoáng mát, thoải mái tự do hoạt động mạnh và siêu bền",
+    "image": "product_images/ao_quan_1.webp"
   },
   {
     "name": "SIÊU RẺ MIKASA Bóng Chuyền",
@@ -19,7 +20,8 @@
     "rating": 0.0,
     "sold_count": 0,
     "is_featured": false,
-    "description": "Quả Bóng Chuyền Chính Hãng Tiêu Chuẩn Thi Đấu Giá Rẻ Đủ Size Trẻ Em Người Lớn"
+    "description": "Quả Bóng Chuyền Chính Hãng Tiêu Chuẩn Thi Đấu Giá Rẻ Đủ Size Trẻ Em Người Lớn",
+    "image": "product_images/nanh.webp"
   },
   {
     "name": "Bộ đồ bóng chuyền nam nữ",
@@ -30,7 +32,8 @@
     "rating": 0.0,
     "sold_count": 0,
     "is_featured": true,
-    "description": "aknjksbvkjdsbvkndaknvkan"
+    "description": "aknjksbvkjdsbvkndaknvkan",
+    "image": "product_images/vn-11134207-7ras8-m4pxf5jv7f5c11.webp"
   },
   {
     "name": "Áo quần bóng chuyền nam nữ",
@@ -41,7 +44,8 @@
     "rating": 0.0,
     "sold_count": 0,
     "is_featured": true,
-    "description": "snbls,bnslfkbmlb"
+    "description": "snbls,bnslfkbmlb",
+    "image": "product_images/vn-11134207-7ras8-m4qatousg29c51.webp"
   },
   {
     "name": "Áo quần bóng chuyền Nữ",
@@ -52,7 +56,8 @@
     "rating": 0.0,
     "sold_count": 0,
     "is_featured": false,
-    "description": "sgvdsvjbsejvbnskfmv,smv ns,bjsvm msv"
+    "description": "sgvdsvjbsejvbnskfmv,smv ns,bjsvm msv",
+    "image": "product_images/bongchuyen_jboZA4h.jpg"
   },
   {
     "name": "Băng Quấn Đầu Gối",
@@ -63,7 +68,8 @@
     "rating": 0.0,
     "sold_count": 0,
     "is_featured": false,
-    "description": "dbfdndfngng"
+    "description": "dbfdndfngng",
+    "image": "product_images/OIP_1.jpg"
   },
   {
     "name": "Xoitop Dây Đai Bóng Chuyền",
@@ -74,7 +80,8 @@
     "rating": 0.0,
     "sold_count": 0,
     "is_featured": false,
-    "description": "dgbdszbhfrshb"
+    "description": "dgbdszbhfrshb",
+    "image": "product_images/OIP_FC83lvy.jpg"
   },
   {
     "name": "Băng khủy tay bóng chuyền",
@@ -85,7 +92,8 @@
     "rating": 0.0,
     "sold_count": 0,
     "is_featured": false,
-    "description": "sfzskgmlskgnlkdnb lkszdnb"
+    "description": "sfzskgmlskgnlkdnb lkszdnb",
+    "image": "product_images/OIP_2.jpg"
   },
   {
     "name": "Dây hỗ trợ phát Bóng chuyền",
@@ -96,7 +104,8 @@
     "rating": 0.0,
     "sold_count": 0,
     "is_featured": false,
-    "description": "jhw sjjsdhjsjsdjsdshh"
+    "description": "jhw sjjsdhjsjsdjsdshh",
+    "image": "product_images/mmluck.webp"
   },
   {
     "name": "Giày bóng chuyền Beyono Storm - Ngọc Thuân chuyên ngành cày sân bê tông, cao cổ dành cho nam và nữ",
@@ -107,7 +116,8 @@
     "rating": 4.5,
     "sold_count": 300,
     "is_featured": true,
-    "description": "..."
+    "description": "...",
+    "image": "product_images/giày_3u9rtcZ.webp"
   },
   {
     "name": "Giày bóng chuyền Beyono Storm; Chuyên cày sân bê tông cho Nam và Nữ",
@@ -118,7 +128,8 @@
     "rating": 4.9,
     "sold_count": 50,
     "is_featured": false,
-    "description": "...."
+    "description": "....",
+    "image": "product_images/giày_1.webp"
   },
   {
     "name": "Giày bóng chuyền VHD Cabeto Sói Đầu Đàn cày sân bê tông không đau gối cho nam và nữ",
@@ -129,7 +140,8 @@
     "rating": 4.5,
     "sold_count": 0,
     "is_featured": true,
-    "description": "..."
+    "description": "...",
+    "image": "product_images/giày_2.webp"
   },
   {
     "name": "Giày Thể Thao Bóng Chuyền Nam,Nữ Chuyên Cày Sân Bê Tông Beyono Limit III",
@@ -140,6 +152,7 @@
     "rating": 4.3,
     "sold_count": 0,
     "is_featured": false,
-    "description": "..."
+    "description": "...",
+    "image": "product_images/giay_3.webp"
   }
 ]

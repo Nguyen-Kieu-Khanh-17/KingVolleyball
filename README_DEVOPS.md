@@ -18,13 +18,14 @@ Mở `http://127.0.0.1:8000/`. Trang đăng nhập: `/login/`; trang đăng ký:
 
 Nếu PowerShell chặn kích hoạt môi trường ảo, có thể dùng `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` trong cửa sổ terminal hiện tại rồi kích hoạt lại.
 
-## 2. Tài khoản quản trị (Admin)
+## 2. Tài khoản quản trị & Cổng Admin riêng biệt
 
-Tài khoản quản trị mặc định đã được cấu hình sẵn trong hệ thống:
-- **Tên đăng nhập (Username):** `admin`
-- **Mật khẩu (Password):** `admin123`
-- **Quyền:** Quản trị viên tối cao (Superuser / Staff)
-- **Đăng nhập quản trị:** Truy cập `http://127.0.0.1:8000/admin/` hoặc đăng nhập tại `/login/` (tài khoản admin sẽ có thêm menu "Thêm sản phẩm" và "Quản trị" trên thanh điều hướng).
+Hệ thống đã tích hợp **Cổng Đăng Nhập Quản Trị riêng biệt** tại:
+- **Đường dẫn Cổng Admin:** `http://127.0.0.1:8000/admin-login/` (hoặc trên Render: `/admin-login/`)
+- **Tài khoản quản trị 1:** `admin` | Mật khẩu: `admin123` (Superuser)
+- **Tài khoản quản trị 2:** `admin17` | Mật khẩu: `admin123` (Superuser)
+- **Bảng điều khiển Quản trị:** `/admin-dashboard/` (quản lý sản phẩm, đơn hàng, khách hàng, doanh thu KPI)
+- **Django Admin Backend:** `/admin/`
 
 Nếu bạn muốn tạo thêm tài khoản quản trị mới khác:
 

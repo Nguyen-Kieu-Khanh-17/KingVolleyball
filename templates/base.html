@@ -407,13 +407,19 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">
-                            Đăng nhập
+                            <i class="fas fa-sign-in-alt me-1"></i> Đăng nhập
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'register' %}">
-                            Đăng ký
+                            <i class="fas fa-user-plus me-1"></i> Đăng ký
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-warning fw-bold" href="{% url 'admin_login' %}">
+                            <i class="fas fa-shield-alt me-1"></i> Cổng Admin
                         </a>
                     </li>
 
@@ -475,6 +481,11 @@
         <small>
             © {% now "Y" %} King Volleyball. All Rights Reserved.
         </small>
+        <div class="mt-2">
+            <a href="{% url 'admin_login' %}" class="text-secondary small text-decoration-none">
+                <i class="fas fa-lock me-1"></i> Cổng Quản trị viên King Volleyball
+            </a>
+        </div>
     </div>
 </footer>
 

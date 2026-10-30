@@ -36,12 +36,13 @@ def init_database():
         status = "Created" if created else "Updated"
         print(f"[{status}] Admin user: {acc['username']} (password: admin123)")
 
-    # 2. Khoi tao san pham mau neu database chua co san pham
-    if Product.objects.count() == 0:
-        json_path = Path(__file__).resolve().parent / 'init_products.json'
-        if json_path.exists():
-            with open(json_path, 'r', encoding='utf-8') as f:
-                products_data = json.load(f)
+    # 2. Khoi tao san pham mau hoac cap nhat anh
+    json_path = Path(__file__).resolve().parent / 'init_products.json'
+    if json_path.exists():
+        with open(json_path, 'r', encoding='utf-8') as f:
+            products_data = json.load(f)
+
+        if Product.objects.count() == 0:
             created_count = 0
             for item in products_data:
                 Product.objects.create(
@@ -53,14 +54,23 @@ def init_database():
                     rating=item.get('rating', 0),
                     sold_count=item.get('sold_count', 0),
                     is_featured=item.get('is_featured', False),
-                    description=item.get('description', '')
+                    description=item.get('description', ''),
+                    image=item.get('image', '')
                 )
                 created_count += 1
-            print(f"Loaded {created_count} initial products successfully.")
+            print(f"Loaded {created_count} initial products with images.")
         else:
-            print("init_products.json not found, skipping product seed.")
+            updated_images = 0
+            for item in products_data:
+                matching = Product.objects.filter(name=item['name'])
+                for p in matching:
+                    if not p.image and item.get('image'):
+                        p.image = item['image']
+                        p.save()
+                        updated_images += 1
+            print(f"Database has {Product.objects.count()} products. Updated images for {updated_images} products.")
     else:
-        print(f"Database already contains {Product.objects.count()} products.")
+        print("init_products.json not found, skipping product seed.")
 
     print("--- Database initialization complete! ---")
 

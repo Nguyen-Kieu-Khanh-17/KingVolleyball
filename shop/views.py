@@ -38,6 +38,27 @@ def login_view(request):
         form = AuthenticationForm(request)
     return render(request, 'login.html', {'form': form, 'next': request.GET.get('next', '')})
 
+def admin_login_view(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('admin_dashboard')
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            if not user.is_staff:
+                messages.error(request, 'Tài khoản này không có quyền Quản trị viên (Staff). Vui lòng đăng nhập tại trang người dùng thông thường.')
+                return render(request, 'admin_login.html', {'form': form})
+            login(request, user)
+            messages.success(request, f'Chào mừng Quản trị viên {user.username} quay trở lại!')
+            return redirect('admin_dashboard')
+        messages.error(request, 'Tên đăng nhập hoặc mật khẩu Quản trị chưa chính xác.')
+    else:
+        form = AuthenticationForm(request)
+    return render(request, 'admin_login.html', {'form': form})
+
 def logout_view(request):
     logout(request)
     return redirect('login')
@@ -557,4 +578,36 @@ def delete_order(request, order_id):
     order_id_num = order.id
     order.delete()
     messages.success(request, f'Đã xóa đơn hàng #{order_id_num} thành công.')
+    return redirect('admin_dashboard')
+
+
+@login_required
+def create_admin_user(request):
+    if not request.user.is_superuser:
+        messages.error(request, "Chỉ Quản trị viên cấp cao (Superuser) mới có quyền tạo thêm tài khoản Quản trị.")
+        return redirect('admin_dashboard')
+
+    if request.method == 'POST':
+        new_username = request.POST.get('username', '').strip()
+        new_email = request.POST.get('email', '').strip()
+        new_password = request.POST.get('password', '').strip()
+        is_super = request.POST.get('is_superuser') == 'on'
+
+        if not new_username or not new_password:
+            messages.error(request, 'Vui lòng điền đầy đủ tên đăng nhập và mật khẩu.')
+            return redirect('admin_dashboard')
+
+        if User.objects.filter(username=new_username).exists():
+            messages.error(request, f'Tên đăng nhập "{new_username}" đã tồn tại.')
+            return redirect('admin_dashboard')
+
+        user = User.objects.create_user(
+            username=new_username,
+            email=new_email,
+            password=new_password
+        )
+        user.is_staff = True
+        user.is_superuser = is_super
+        user.save()
+        messages.success(request, f'Đã tạo thành công tài khoản Quản trị: {new_username}!')
     return redirect('admin_dashboard')

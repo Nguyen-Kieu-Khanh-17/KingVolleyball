@@ -66,11 +66,12 @@
                         Bạn chưa có tài khoản? <a href="{% url 'register' %}" class="text-decoration-none fw-bold">Đăng ký ngay</a>
                     </p>
 
-                    <hr class="my-3">
-
-                    <p class="text-muted small text-center mb-0">
-                        <i class="bi bi-shield-check"></i> Thông tin của bạn được xử lý qua hệ thống tài khoản của website.
-                    </p>
+                    <div class="text-center mt-3 pt-3 border-top">
+                        <span class="text-muted small">Bạn là Quản trị viên?</span>
+                        <a href="{% url 'admin_login' %}" class="btn btn-sm btn-outline-dark fw-bold ms-2 px-3">
+                            <i class="fas fa-shield-alt text-warning me-1"></i> Cổng Đăng Nhập Admin
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
