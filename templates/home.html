@@ -1,0 +1,335 @@
+
+{% extends 'base.html' %}
+
+{% block title %}King Volleyball | Cửa hàng bóng chuyền{% endblock %}
+
+{% block content %}
+
+<style>
+    /* HERO */
+    .kv-hero {
+        min-height: 450px;
+        display: flex;
+        align-items: center;
+        color: white;
+        background:
+            linear-gradient(90deg, rgba(0,0,0,.88), rgba(0,0,0,.25)),
+            url("https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=1600&q=85")
+            center/cover no-repeat;
+    }
+
+    .kv-hero-content {
+        max-width: 650px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .kv-hero h1 {
+        font-size: clamp(2.3rem, 5vw, 4.2rem);
+        font-weight: 900;
+        line-height: 1.15;
+    }
+
+    .kv-hero p {
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    .kv-hero-btn {
+        background: #f97316;
+        color: white;
+        padding: 13px 28px;
+        border-radius: 7px;
+        font-weight: 700;
+        border: none;
+    }
+
+    .kv-hero-btn:hover {
+        background: #ea580c;
+        color: white;
+    }
+
+    /* HOME SECTIONS */
+    .kv-section {
+        padding-top: 42px;
+        padding-bottom: 15px;
+    }
+
+    /* CATEGORY */
+    .kv-category {
+        display: block;
+        padding: 25px 12px;
+        background: white;
+        border: 1px solid #eeeeee;
+        border-radius: 12px;
+        text-align: center;
+        color: #222;
+        height: 100%;
+        transition: .25s;
+        box-shadow: 0 3px 12px rgba(0,0,0,.04);
+    }
+
+    .kv-category:hover {
+        background: #fff3e9;
+        border-color: #f97316;
+        color: #ea580c;
+        transform: translateY(-5px);
+    }
+
+    .kv-category .emoji {
+        display: block;
+        font-size: 42px;
+        margin-bottom: 12px;
+    }
+
+    .kv-category strong {
+        font-size: 15px;
+    }
+
+    /* PROMOTION BANNER */
+    .kv-promotion {
+        background: linear-gradient(120deg, #171717, #393939);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-top: 35px;
+    }
+
+    .kv-promotion span {
+        color: #ff9a45;
+    }
+
+    @media (max-width: 576px) {
+        .kv-hero {
+            min-height: 360px;
+        }
+
+        .kv-hero p {
+            font-size: 15px;
+        }
+
+        .kv-promotion {
+            padding: 20px;
+        }
+    }
+</style>
+
+<!-- HERO BANNER -->
+<section class="kv-hero">
+
+    <div class="container">
+
+        <div class="kv-hero-content">
+
+            <span class="badge bg-warning text-dark mb-3 px-3 py-2">
+                KING VOLLEYBALL
+            </span>
+
+            <h1>
+                CHINH PHỤC
+                <br>
+                SÂN BÓNG CỦA BẠN
+            </h1>
+
+            <p class="my-4">
+                Khám phá các sản phẩm bóng chuyền chất lượng.
+                Trang bị tốt hơn, thi đấu tự tin hơn và
+                cùng bạn chinh phục mọi trận đấu.
+            </p>
+
+            <a href="{% url 'product_list' %}"
+               class="btn kv-hero-btn">
+
+                <i class="fas fa-shopping-bag"></i>
+                Khám phá sản phẩm
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="container">
+
+    <!-- CATEGORIES -->
+    <section class="kv-section">
+
+        <h2 class="kv-heading">
+            Danh mục sản phẩm
+        </h2>
+
+        <div class="row row-cols-2 row-cols-md-4 g-3">
+
+            <div class="col">
+                <a class="kv-category"
+                   href="{% url 'product_list' %}?type=ball">
+
+                    <span class="emoji">🏐</span>
+                    <strong>Bóng chuyền</strong>
+
+                </a>
+            </div>
+
+            <div class="col">
+                <a class="kv-category"
+                   href="{% url 'product_list' %}?type=shoes">
+
+                    <span class="emoji">👟</span>
+                    <strong>Giày bóng chuyền</strong>
+
+                </a>
+            </div>
+
+            <div class="col">
+                <a class="kv-category"
+                   href="{% url 'product_list' %}?type=clothing">
+
+                    <span class="emoji">👕</span>
+                    <strong>Quần áo bóng chuyền</strong>
+
+                </a>
+            </div>
+
+            <div class="col">
+                <a class="kv-category"
+                   href="{% url 'product_list' %}?type=accessories">
+
+                    <span class="emoji">🎒</span>
+                    <strong>Phụ kiện</strong>
+
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PROMOTION -->
+    <section class="kv-promotion">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <h3 class="fw-bold">
+                    ƯU ĐÃI ĐẶC BIỆT
+                </h3>
+
+                <p class="mb-0">
+                    Khám phá những sản phẩm đang được giảm giá
+                    tại <span>King Volleyball</span>.
+                </p>
+
+            </div>
+
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                <a href="{% url 'product_list' %}"
+                   class="btn btn-warning fw-bold">
+
+                    Mua ngay
+                    <i class="fas fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="kv-section">
+
+        <h2 class="kv-heading">
+            <i class="fas fa-star text-warning"></i>
+            Sản phẩm nổi bật
+        </h2>
+
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+            {% for product in featured_products %}
+
+                <div class="col">
+                    {% include 'product_card.html' with product=product %}
+                </div>
+
+            {% empty %}
+
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        Chưa có sản phẩm nổi bật.
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    <!-- DISCOUNTED PRODUCTS -->
+    <section class="kv-section">
+
+        <h2 class="kv-heading">
+            <i class="fas fa-fire text-danger"></i>
+            Ưu đãi dành cho bạn
+        </h2>
+
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+            {% for product in discounted_products %}
+
+                <div class="col">
+                    {% include 'product_card.html' with product=product %}
+                </div>
+
+            {% empty %}
+
+                <div class="col-12">
+                    <p class="text-secondary">
+                        Hiện chưa có sản phẩm khuyến mãi.
+                    </p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    <!-- LATEST PRODUCTS -->
+    <section class="kv-section">
+
+        <h2 class="kv-heading">
+            <i class="fas fa-clock text-warning"></i>
+            Sản phẩm mới cập nhật
+        </h2>
+
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+            {% for product in latest_products %}
+
+                <div class="col">
+                    {% include 'product_card.html' with product=product %}
+                </div>
+
+            {% empty %}
+
+                <div class="col-12">
+                    <p class="text-secondary">
+                        Chưa có sản phẩm mới.
+                    </p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

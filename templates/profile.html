@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+          <h4>Thông tin người dùng</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Tên đăng nhập:</strong> {{ user.username }}
+            </li>
+            <li class="list-group-item">
+              <strong>Email:</strong> {{ user.email }}
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer text-end">
+          <a class="btn btn-outline-danger" href="{% url 'logout' %}">Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

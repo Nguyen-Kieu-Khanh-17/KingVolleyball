@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    container_name: king-volleyball-web
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_DEBUG: "1"
+      DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1,0.0.0.0"
+      DJANGO_SECRET_KEY: "dev-only-change-me"
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+      - ./media:/app/media
+    restart: unless-stopped

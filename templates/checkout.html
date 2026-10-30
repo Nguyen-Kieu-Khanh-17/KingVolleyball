@@ -1,0 +1,126 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Thanh toán | King Volleyball{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <h2 class="mb-4">🧾 Thanh toán đơn hàng</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row g-4">
+
+        <!-- Thông tin đơn hàng -->
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Sản phẩm đã chọn</h5>
+                </div>
+
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+
+                        {% for item in items %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                <div>
+                                    <strong>{{ item.product.name }}</strong>
+                                    <div class="text-muted small">
+                                        Số lượng: {{ item.quantity }}
+                                    </div>
+                                </div>
+
+                                <strong>
+                                    {{ item.total_price|floatformat:0 }} ₫
+                                </strong>
+
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+                <div class="card-footer text-end">
+                    <span class="fs-5">
+                        Tổng thanh toán:
+                        <strong class="text-danger">
+                            {{ total|floatformat:0 }} ₫
+                        </strong>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Thanh toán QR -->
+        <div class="col-lg-5">
+
+            <div class="card shadow-sm text-center">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">📱 Mã QR thanh toán mô phỏng</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <img
+                        src="{{ qr_code_url }}"
+                        alt="Mã QR thanh toán mô phỏng"
+                        width="230"
+                        height="230"
+                        class="img-fluid border rounded p-2"
+                    >
+
+                    <h5 class="mt-3">
+                        {{ total|floatformat:0 }} ₫
+                    </h5>
+
+                    <p class="text-muted small">
+                        Mã QR này chỉ chứa thông tin thanh toán mô phỏng.
+                        Chưa kết nối ngân hàng hoặc cổng thanh toán thật.
+                    </p>
+
+                    <div class="alert alert-warning text-start small">
+                        <strong>Lưu ý:</strong>
+                        Khi nhấn xác nhận, hệ thống sẽ ghi nhận đơn hàng
+                        là đã hoàn tất theo hình thức mô phỏng.
+                        Không có giao dịch chuyển tiền thật.
+                    </div>
+
+                    <!-- Form xác nhận đơn hàng -->
+                    <form
+                        method="post"
+                        action="{% url 'checkout' %}"
+                        onsubmit="return confirm('Bạn có chắc chắn muốn xác nhận thanh toán đơn hàng này không?');">
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="btn btn-success btn-lg w-100">
+                            ✅ Tôi đã thanh toán
+                        </button>
+
+                    </form>
+
+                    <a href="{% url 'cart' %}" class="btn btn-outline-secondary w-100 mt-2">
+                        Quay lại giỏ hàng
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

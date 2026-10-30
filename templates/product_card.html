@@ -1,0 +1,72 @@
+
+<div class="card kv-product h-100">
+
+    <!-- PRODUCT IMAGE -->
+    <a href="{% url 'product_detail' product.id %}"
+       class="kv-product-link">
+
+        {% if product.image %}
+            <img src="{{ product.image.url }}"
+                 class="kv-product-img"
+                 alt="{{ product.name }}"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+
+            <div class="kv-image-placeholder" style="display:none;">
+                🏐
+            </div>
+        {% else %}
+            <div class="kv-image-placeholder">
+                🏐
+            </div>
+        {% endif %}
+
+    </a>
+
+    <!-- PRODUCT INFORMATION -->
+    <div class="card-body d-flex flex-column">
+
+        {% if product.discount_percent > 0 %}
+            <span class="badge bg-danger align-self-start mb-2">
+                -{{ product.discount_percent }}%
+            </span>
+        {% endif %}
+
+        <a href="{% url 'product_detail' product.id %}"
+           class="text-decoration-none">
+
+            <h6 class="card-title">
+                {{ product.name|truncatechars:45 }}
+            </h6>
+
+        </a>
+
+        <!-- RATING -->
+        <div class="text-warning mb-2">
+            <i class="fas fa-star"></i>
+            {{ product.rating|default:0|floatformat:1 }}/5
+        </div>
+
+        <!-- PRICE -->
+        <div class="mt-auto">
+
+            {% if product.discount_percent > 0 %}
+                <div class="kv-old-price">
+                    {{ product.price|floatformat:0 }} ₫
+                </div>
+            {% endif %}
+
+            <div class="kv-price mb-3">
+                {{ product.final_price|floatformat:0 }} ₫
+            </div>
+
+            <a href="{% url 'add_to_cart' product.id %}"
+               class="btn kv-btn w-100">
+
+                <i class="fas fa-cart-plus"></i>
+                Thêm vào giỏ
+
+            </a>
+
+        </div>
+    </div>
+</div>

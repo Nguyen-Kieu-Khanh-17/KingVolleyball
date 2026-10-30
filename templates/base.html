@@ -1,0 +1,478 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}King Volleyball | Cửa hàng thể thao{% endblock %}</title>
+
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+    {% block extra_css %}{% endblock %}
+
+    <style>
+        :root {
+            --kv-orange: #f97316;
+            --kv-orange-dark: #ea580c;
+            --kv-black: #111111;
+            --kv-gray: #666666;
+            --kv-light: #f5f5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f5f5 !important;
+            color: #222222 !important;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            background: #111111 !important;
+            min-height: 72px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.15);
+        }
+
+        .navbar .container {
+            gap: 15px;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-size: 22px;
+            letter-spacing: .3px;
+            white-space: nowrap;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 43px;
+            height: 43px;
+            margin-right: 9px;
+            border-radius: 50%;
+            background: var(--kv-orange);
+            font-size: 24px;
+        }
+
+        .navbar .nav-link {
+            color: #eeeeee !important;
+            font-weight: 600;
+            padding: 12px 10px !important;
+            transition: .2s;
+        }
+
+        .navbar .nav-link:hover {
+            color: var(--kv-orange) !important;
+        }
+
+        .navbar .nav-link i {
+            margin-right: 5px;
+        }
+
+        .navbar-toggler {
+            border-color: #777;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .kv-search {
+            max-width: 340px;
+            width: 100%;
+        }
+
+        .kv-search .form-control {
+            border-radius: 25px 0 0 25px;
+            border: none;
+        }
+
+        .kv-search .btn {
+            background: var(--kv-orange);
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+        }
+
+        .kv-search .btn:hover {
+            background: var(--kv-orange-dark);
+        }
+
+        .btn-logout {
+            background: none;
+            border: none;
+            color: white;
+            padding: 12px 10px;
+            font-weight: 600;
+        }
+
+        .btn-logout:hover {
+            color: var(--kv-orange);
+        }
+
+        /* MAIN CONTENT */
+        .content {
+            min-height: 65vh;
+            padding-bottom: 35px;
+        }
+
+        /* PAGE CONTAINER */
+        .kv-page {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 15px;
+        }
+
+        /* SECTION TITLE */
+        .kv-heading {
+            font-weight: 800;
+            color: #222222;
+            border-left: 5px solid var(--kv-orange);
+            padding-left: 13px;
+            margin-bottom: 24px;
+        }
+
+        /* PRODUCT CARD */
+        .kv-product {
+            height: 100%;
+            background: white;
+            border: 1px solid #eeeeee;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: .25s;
+            box-shadow: 0 3px 12px rgba(0,0,0,.04);
+        }
+
+        .kv-product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.12);
+        }
+
+        .kv-product-link {
+            display: block;
+            overflow: hidden;
+            background: #f7f7f7;
+        }
+
+        .kv-product-img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #f7f7f7;
+            padding: 12px;
+            transition: transform .3s;
+        }
+
+        .kv-product:hover .kv-product-img {
+            transform: scale(1.04);
+        }
+
+        .kv-image-placeholder {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f7f7f7;
+            color: #bbbbbb;
+            font-size: 65px;
+        }
+
+        .kv-product .card-body {
+            padding: 16px;
+        }
+
+        .kv-product .card-title {
+            color: #222222;
+            font-weight: 700;
+            line-height: 1.5;
+            min-height: 42px;
+        }
+
+        .kv-price {
+            color: var(--kv-orange-dark);
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .kv-old-price {
+            color: #999999;
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+
+        .kv-btn {
+            background: var(--kv-orange);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+
+        .kv-btn:hover {
+            background: var(--kv-orange-dark);
+            color: white;
+        }
+
+        /* BUTTONS */
+        .btn-main {
+            background: var(--kv-orange);
+            color: white;
+            border: none;
+        }
+
+        .btn-main:hover {
+            background: var(--kv-orange-dark);
+            color: white;
+        }
+
+        /* MESSAGES */
+        .site-messages {
+            position: relative;
+            z-index: 10;
+            padding-top: 12px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #111111;
+            color: #eeeeee;
+            padding: 35px 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #ff9a45;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        @media (max-width: 991px) {
+            .navbar .navbar-collapse {
+                padding: 15px 0;
+            }
+
+            .kv-search {
+                max-width: 100%;
+                margin: 10px 0;
+            }
+
+            .navbar-nav {
+                align-items: flex-start !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .kv-product-img,
+            .kv-image-placeholder {
+                height: 160px;
+            }
+
+            .kv-product .card-body {
+                padding: 10px;
+            }
+
+            .kv-price {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+
+        <!-- LOGO -->
+        <a class="navbar-brand fw-bold d-flex align-items-center"
+           href="{% url 'home' %}">
+            <span class="brand-mark">🏐</span>
+            <span>King Volleyball</span>
+        </a>
+
+        <!-- MOBILE MENU -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <!-- SEARCH -->
+            <form class="d-flex mx-lg-auto kv-search"
+                  action="{% url 'search' %}"
+                  method="get">
+
+                <input class="form-control"
+                       type="search"
+                       placeholder="Tìm kiếm sản phẩm..."
+                       name="q">
+
+                <button class="btn px-3" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
+            <!-- MENU -->
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Trang chủ
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'product_list' %}">
+                        <i class="fas fa-volleyball-ball"></i> Sản phẩm
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        <i class="fas fa-shopping-cart"></i> Giỏ hàng
+                    </a>
+                </li>
+
+                {% if user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">
+                            <i class="fas fa-user"></i>
+                            {{ user.username }}
+                        </a>
+                    </li>
+
+                    {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add_product' %}">
+                                <i class="fas fa-plus-circle"></i>
+                                Thêm sản phẩm
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/">
+                                <i class="fas fa-cog"></i> Quản trị
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Đăng xuất
+                            </button>
+                        </form>
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            Đăng nhập
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">
+                            Đăng ký
+                        </a>
+                    </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- FLASH MESSAGES -->
+{% if messages %}
+<div class="container site-messages">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
+             role="alert">
+            {{ message }}
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+            </button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- MAIN CONTENT -->
+<main class="content">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <h4 class="fw-bold mb-3">
+            🏐 KING VOLLEYBALL
+        </h4>
+
+        <p class="mb-2">
+            Đồng hành cùng đam mê bóng chuyền.
+        </p>
+
+        <p class="mb-1">
+            <i class="fas fa-phone"></i>
+            Liên hệ:
+            <a href="tel:1990882525">199 088 2525</a>
+        </p>
+
+        <p class="mb-3">
+            <i class="fas fa-envelope"></i>
+            Email:
+            <a href="mailto:volleyball@gmail.com">
+                volleyball@gmail.com
+            </a>
+        </p>
+
+        <hr class="border-secondary">
+
+        <small>
+            © {% now "Y" %} King Volleyball. All Rights Reserved.
+        </small>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Sản phẩm | King Volleyball{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- PAGE TITLE -->
+    <div class="mb-4">
+        <h1 class="kv-heading">
+            Tất cả sản phẩm
+        </h1>
+
+        <p class="text-secondary">
+            Khám phá các sản phẩm bóng chuyền chất lượng tại King Volleyball.
+        </p>
+    </div>
+
+    <!-- CATEGORY FILTER -->
+    <div class="d-flex flex-wrap gap-2 mb-4">
+
+        <a href="{% url 'product_list' %}"
+           class="btn {% if not selected_type %}btn-warning{% else %}btn-outline-dark{% endif %}">
+            <i class="fas fa-th-large"></i>
+            Tất cả
+        </a>
+
+        {% for value, label in product_types %}
+
+            <a href="{% url 'product_list' %}?type={{ value }}"
+               class="btn {% if selected_type == value %}btn-warning{% else %}btn-outline-dark{% endif %}">
+                {{ label }}
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- PRODUCT COUNT -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h5 class="fw-bold mb-0">
+            Danh sách sản phẩm
+        </h5>
+
+        <span class="text-secondary">
+            {{ products|length }} sản phẩm
+        </span>
+
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+        {% for product in products %}
+
+            <div class="col">
+                {% include 'product_card.html' with product=product %}
+            </div>
+
+        {% empty %}
+
+            <div class="col-12">
+
+                <div class="text-center bg-white rounded-3 p-5 shadow-sm">
+
+                    <i class="fas fa-box-open fa-3x text-secondary mb-3"></i>
+
+                    <h5>Chưa có sản phẩm</h5>
+
+                    <p class="text-secondary">
+                        Danh mục này hiện chưa có sản phẩm.
+                        Bạn hãy quay lại sau nhé!
+                    </p>
+
+                    <a href="{% url 'home' %}" class="btn kv-btn">
+                        <i class="fas fa-home"></i>
+                        Về trang chủ
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Đăng nhập | King Volleyball{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+  <div class="auth-layout">
+    <div class="auth-intro">
+      <span class="auth-eyebrow"><i class="fa-solid fa-volleyball"></i> KING VOLLEYBALL</span>
+      <h1>Chào mừng<br>trở lại!</h1>
+      <p>Đăng nhập để khám phá sản phẩm, quản lý giỏ hàng và tiếp tục hành trình cùng đam mê bóng chuyền.</p>
+      <div class="auth-points">
+        <span><i class="fa-solid fa-check-circle"></i> Sản phẩm thể thao chất lượng</span>
+        <span><i class="fa-solid fa-check-circle"></i> Mua sắm thuận tiện</span>
+      </div>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-card-heading">
+        <span class="auth-icon"><i class="fa-solid fa-user"></i></span>
+        <div><h2>Đăng nhập</h2><p>Nhập thông tin tài khoản của bạn</p></div>
+      </div>
+
+      {% if form.non_field_errors %}<div class="alert alert-danger" role="alert">{{ form.non_field_errors|striptags }}</div>{% endif %}
+      {% if form.errors and not form.non_field_errors %}<div class="alert alert-danger" role="alert">Tên đăng nhập hoặc mật khẩu chưa chính xác.</div>{% endif %}
+
+      <form method="post" action="{% url 'login' %}" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <div class="mb-3">
+          <label for="{{ form.username.id_for_label }}" class="form-label">Tên đăng nhập</label>
+          {% render_field form.username class="form-control auth-input" placeholder="Nhập tên đăng nhập" autocomplete="username" autofocus="autofocus" %}
+          {% for error in form.username.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+        </div>
+        <div class="mb-2">
+          <label for="{{ form.password.id_for_label }}" class="form-label">Mật khẩu</label>
+          <div class="password-wrap">
+            {% render_field form.password class="form-control auth-input" placeholder="Nhập mật khẩu" autocomplete="current-password" %}
+            <button class="password-toggle" type="button" data-toggle-password="id_password" aria-label="Hiện mật khẩu"><i class="fa-regular fa-eye"></i></button>
+          </div>
+          {% for error in form.password.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+        </div>
+        <button type="submit" class="btn auth-submit"><span>Đăng nhập</span><i class="fa-solid fa-arrow-right"></i></button>
+      </form>
+      <p class="auth-switch">Bạn chưa có tài khoản? <a href="{% url 'register' %}">Đăng ký ngay</a></p>
+      <p class="auth-security"><i class="fa-solid fa-shield-halved"></i> Thông tin của bạn được xử lý qua hệ thống tài khoản của website.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.querySelectorAll('[data-toggle-password]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      const input = document.getElementById(button.dataset.togglePassword);
+      if (!input) return;
+      input.type = input.type === 'password' ? 'text' : 'password';
+      button.innerHTML = input.type === 'password' ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>';
+      button.setAttribute('aria-label', input.type === 'password' ? 'Hiện mật khẩu' : 'Ẩn mật khẩu');
+    });
+  });
+</script>
+{% endblock %}

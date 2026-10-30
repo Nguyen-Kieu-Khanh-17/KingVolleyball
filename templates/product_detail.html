@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} | King Volleyball{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <a href="{% url 'home' %}">Trang chủ</a>
+        /
+        <a href="{% url 'product_list' %}">Sản phẩm</a>
+        /
+        {{ product.name }}
+    </nav>
+
+    <div class="row g-5">
+        <div class="col-md-6">
+            {% if product.image %}
+                <img src="{{ product.image.url }}"
+                     alt="{{ product.name }}"
+                     class="img-fluid rounded shadow-sm w-100"
+                     style="max-height: 480px; object-fit: contain;">
+            {% else %}
+                <div class="bg-light rounded p-5 text-center fs-1">
+                    🏐
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <h1 class="fw-bold">{{ product.name }}</h1>
+
+            <p class="text-warning">
+                ★ {{ product.rating|floatformat:1 }}/5
+                <span class="text-muted">
+                    | Đã bán: {{ product.sold_count }}
+                </span>
+            </p>
+
+            {% if product.discount_percent > 0 %}
+                <span class="badge bg-danger mb-3">
+                    Giảm {{ product.discount_percent }}%
+                </span>
+                <p class="text-muted text-decoration-line-through mb-1">
+                    {{ product.price|floatformat:0 }} ₫
+                </p>
+            {% endif %}
+
+            <h2 class="text-danger fw-bold mb-4">
+                {{ product.final_price|floatformat:0 }} ₫
+            </h2>
+
+            <h5>Mô tả sản phẩm</h5>
+            <p style="white-space: pre-line;">{{ product.description }}</p>
+
+            <a href="{% url 'add_to_cart' product.id %}"
+               class="btn btn-warning btn-lg">
+                <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+            </a>
+
+            <a href="{% url 'product_list' %}"
+               class="btn btn-outline-dark btn-lg ms-2">
+                Quay lại
+            </a>
+        </div>
+    </div>
+
+    {% if related_products %}
+        <hr class="my-5">
+        <h3 class="fw-bold mb-4">Sản phẩm tương tự</h3>
+
+        <div class="row row-cols-2 row-cols-md-4 g-3">
+            {% for item in related_products %}
+                <div class="col">
+                    {% include 'product_card.html' with product=item %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
