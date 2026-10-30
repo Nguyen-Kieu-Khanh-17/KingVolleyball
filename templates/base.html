@@ -365,22 +365,30 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profile' %}">
-                            <i class="fas fa-user"></i>
+                            <i class="fas fa-user-circle"></i>
                             {{ user.username }}
+                            {% if user.is_staff %}
+                                <span class="badge bg-warning text-dark ms-1" style="font-size: 11px;">Admin</span>
+                            {% endif %}
                         </a>
                     </li>
 
                     {% if user.is_staff %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'add_product' %}">
-                                <i class="fas fa-plus-circle"></i>
-                                Thêm sản phẩm
+                            <a class="nav-link text-warning fw-semibold" href="{% url 'admin_dashboard' %}">
+                                <i class="fas fa-chart-line"></i> Bảng điều khiển
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/">
-                                <i class="fas fa-cog"></i> Quản trị
+                            <a class="nav-link" href="{% url 'add_product' %}">
+                                <i class="fas fa-plus-circle"></i> Thêm SP
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/" target="_blank">
+                                <i class="fas fa-cog"></i> Django Admin
                             </a>
                         </li>
                     {% endif %}

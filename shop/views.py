@@ -4,19 +4,17 @@ from io import BytesIO
 
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
 from django.views.decorators.http import require_GET, require_POST
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Sum, Count, Avg
 from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import RegisterForm, ProductForm
+from .forms import RegisterForm, ProductForm, RatingForm, UserProfileForm
 from .models import Product, CartItem, Order, OrderItem
-from .forms import RatingForm
 # -----------------------
 # Auth & Profile
 # -----------------------
@@ -66,7 +64,52 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html', {'user': request.user})
+    if request.method == 'POST':
+        profile_form = UserProfileForm(request.POST, instance=request.user)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, 'Cập nhật thông tin tài khoản thành công!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Vui lòng kiểm tra lại thông tin vừa nhập.')
+    else:
+        profile_form = UserProfileForm(instance=request.user)
+
+    password_form = PasswordChangeForm(request.user)
+    user_orders = Order.objects.filter(user=request.user).prefetch_related('items__product').order_by('-created_at')
+
+    admin_stats = None
+    if request.user.is_staff:
+        admin_stats = {
+            'total_revenue': Order.objects.aggregate(total=Sum('total_amount'))['total'] or Decimal('0'),
+            'total_orders': Order.objects.count(),
+            'total_products': Product.objects.count(),
+            'total_users': User.objects.count(),
+        }
+
+    context = {
+        'user': request.user,
+        'profile_form': profile_form,
+        'password_form': password_form,
+        'user_orders': user_orders,
+        'admin_stats': admin_stats,
+    }
+    return render(request, 'profile.html', context)
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Đổi mật khẩu thành công! Phiên đăng nhập của bạn vẫn được giữ.')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, error)
+    return redirect('profile')
 
 # -----------------------
 # Home & Search
@@ -152,14 +195,35 @@ def product_detail(request, product_id):
 
 @login_required
 def add_product(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Bạn không có quyền thêm sản phẩm.")
+
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            product = form.save()
+            messages.success(request, f'Thêm sản phẩm "{product.name}" thành công!')
+            return redirect('admin_dashboard')
     else:
         form = ProductForm()
     return render(request, 'add_product.html', {'form': form})
+
+
+@login_required
+def edit_product(request, product_id):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Bạn không có quyền sửa sản phẩm.")
+
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Cập nhật sản phẩm "{product.name}" thành công!')
+            return redirect('admin_dashboard')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'edit_product.html', {'form': form, 'product': product})
 
 
 @login_required
@@ -168,8 +232,13 @@ def delete_product(request, product_id):
         return HttpResponseForbidden("Bạn không có quyền xóa sản phẩm.")
 
     product = get_object_or_404(Product, id=product_id)
+    product_name = product.name
     product.delete()
-    return redirect('home')
+    messages.success(request, f'Đã xóa sản phẩm "{product_name}" thành công.')
+    referer = request.META.get('HTTP_REFERER')
+    if referer and 'product' not in referer:
+        return redirect(referer)
+    return redirect('admin_dashboard')
 
 @login_required
 @require_POST
@@ -412,3 +481,80 @@ def rate_product(request, product_id):
         form = RatingForm()
 
     return render(request, 'rate_product.html', {'form': form})
+
+# -----------------------
+# Admin Dashboard & Management
+# -----------------------
+
+@login_required
+def admin_dashboard(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Bạn không có quyền truy cập trang quản trị này.")
+
+    search_query = request.GET.get('q', '').strip()
+    type_filter = request.GET.get('type', '').strip()
+
+    products_qs = Product.objects.all().order_by('-id')
+    if search_query:
+        products_qs = products_qs.filter(
+            Q(name__icontains=search_query) | Q(description__icontains=search_query)
+        )
+    if type_filter:
+        products_qs = products_qs.filter(product_type=type_filter)
+
+    total_revenue = Order.objects.aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+    total_orders = Order.objects.count()
+    total_products = Product.objects.count()
+    total_users = User.objects.count()
+    total_sold_items = OrderItem.objects.aggregate(total=Sum('quantity'))['total'] or 0
+
+    orders = Order.objects.select_related('user').prefetch_related('items__product').order_by('-created_at')[:40]
+    users = User.objects.all().order_by('-date_joined')
+    top_products = Product.objects.order_by('-sold_count')[:6]
+
+    context = {
+        'total_revenue': total_revenue,
+        'total_orders': total_orders,
+        'total_products': total_products,
+        'total_users': total_users,
+        'total_sold_items': total_sold_items,
+        'products': products_qs,
+        'orders': orders,
+        'users': users,
+        'top_products': top_products,
+        'product_types': Product.PRODUCT_TYPE_CHOICES,
+        'search_query': search_query,
+        'selected_type': type_filter,
+    }
+    return render(request, 'admin_dashboard.html', context)
+
+
+@login_required
+def toggle_user_staff(request, user_id):
+    if not request.user.is_superuser:
+        messages.error(request, "Chỉ Quản trị viên cấp cao (Superuser) mới có quyền cấp hoặc hủy quyền Staff.")
+        return redirect('admin_dashboard')
+
+    target_user = get_object_or_404(User, id=user_id)
+    if target_user == request.user:
+        messages.warning(request, "Bạn không thể tự hủy quyền quản trị của chính mình.")
+        return redirect('admin_dashboard')
+
+    target_user.is_staff = not target_user.is_staff
+    target_user.save()
+
+    status = "được cấp quyền Quản trị (Staff)" if target_user.is_staff else "bị thu hồi quyền Quản trị"
+    messages.success(request, f'Tài khoản {target_user.username} đã {status}.')
+    return redirect('admin_dashboard')
+
+
+@login_required
+def delete_order(request, order_id):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Bạn không có quyền thao tác.")
+
+    order = get_object_or_404(Order, id=order_id)
+    order_id_num = order.id
+    order.delete()
+    messages.success(request, f'Đã xóa đơn hàng #{order_id_num} thành công.')
+    return redirect('admin_dashboard')

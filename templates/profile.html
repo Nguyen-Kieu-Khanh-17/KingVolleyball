@@ -1,28 +1,264 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hồ sơ tài khoản | King Volleyball{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white text-center">
-          <h4>Thông tin người dùng</h4>
+<div class="container py-4">
+
+    <!-- HERO PROFILE HEADER -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); color: white;">
+        <div class="card-body p-4 p-md-5">
+            <div class="row align-items-center g-4">
+                <div class="col-auto">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center shadow" 
+                         style="width: 88px; height: 88px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: #fff; font-size: 38px; font-weight: bold;">
+                        {{ user.username|first|upper }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                        <h2 class="fw-bold mb-0 text-white">{{ user.username }}</h2>
+                        {% if user.is_superuser %}
+                            <span class="badge bg-danger px-3 py-2 rounded-pill"><i class="fas fa-crown me-1"></i> Super Admin</span>
+                        {% elif user.is_staff %}
+                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill"><i class="fas fa-user-shield me-1"></i> Quản trị viên</span>
+                        {% else %}
+                            <span class="badge bg-info text-dark px-3 py-2 rounded-pill"><i class="fas fa-user me-1"></i> Thành viên</span>
+                        {% endif %}
+                    </div>
+                    <p class="mb-2 text-white-50">
+                        <i class="fas fa-envelope me-2"></i>{{ user.email|default:"Chưa có email" }}
+                        <span class="mx-2">•</span>
+                        <i class="fas fa-calendar-alt me-2"></i>Tham gia: {{ user.date_joined|date:"d/m/Y" }}
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        {% if user.is_staff %}
+                            <a href="{% url 'admin_dashboard' %}" class="btn btn-warning fw-bold px-3 shadow-sm">
+                                <i class="fas fa-chart-line me-1"></i> Bảng điều khiển Quản trị
+                            </a>
+                            <a href="{% url 'add_product' %}" class="btn btn-outline-light px-3">
+                                <i class="fas fa-plus-circle me-1"></i> Thêm sản phẩm
+                            </a>
+                            <a href="/admin/" target="_blank" class="btn btn-outline-light px-3">
+                                <i class="fas fa-cog me-1"></i> Django Admin
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-auto ms-auto">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger px-4">
+                            <i class="fas fa-sign-out-alt me-1"></i> Đăng xuất
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <strong>Tên đăng nhập:</strong> {{ user.username }}
-            </li>
-            <li class="list-group-item">
-              <strong>Email:</strong> {{ user.email }}
-            </li>
-          </ul>
-        </div>
-        <div class="card-footer text-end">
-          <a class="btn btn-outline-danger" href="{% url 'logout' %}">Đăng xuất</a>
-        </div>
-      </div>
     </div>
-  </div>
+
+    {% if user.is_staff and admin_stats %}
+    <!-- ADMIN QUICK STATS SUMMARY -->
+    <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0 text-dark">
+                <i class="fas fa-tachometer-alt text-warning me-2"></i>Trung tâm Tổng quan Quản trị (Admin Hub)
+            </h5>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-sm btn-link text-decoration-none fw-bold text-warning">
+                Xem toàn bộ Dashboard <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+        <div class="row g-3">
+            <div class="col-6 col-lg-3">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted small fw-semibold">Tổng doanh thu</span>
+                            <h4 class="fw-bold text-danger mb-0 mt-1">{{ admin_stats.total_revenue|floatformat:0 }} ₫</h4>
+                        </div>
+                        <div class="rounded-3 p-3 text-danger bg-danger-subtle">
+                            <i class="fas fa-wallet fa-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted small fw-semibold">Đơn hàng</span>
+                            <h4 class="fw-bold text-primary mb-0 mt-1">{{ admin_stats.total_orders }}</h4>
+                        </div>
+                        <div class="rounded-3 p-3 text-primary bg-primary-subtle">
+                            <i class="fas fa-shopping-bag fa-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted small fw-semibold">Sản phẩm trong kho</span>
+                            <h4 class="fw-bold text-success mb-0 mt-1">{{ admin_stats.total_products }}</h4>
+                        </div>
+                        <div class="rounded-3 p-3 text-success bg-success-subtle">
+                            <i class="fas fa-volleyball-ball fa-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted small fw-semibold">Người dùng</span>
+                            <h4 class="fw-bold text-info mb-0 mt-1">{{ admin_stats.total_users }}</h4>
+                        </div>
+                        <div class="rounded-3 p-3 text-info bg-info-subtle">
+                            <i class="fas fa-users fa-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- TABBED SETTINGS AND ORDERS -->
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+            <ul class="nav nav-tabs card-header-tabs" id="profileTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active fw-bold text-dark" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-pane" type="button" role="tab">
+                        <i class="fas fa-user-edit me-2 text-warning"></i>Thông tin cá nhân
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-bold text-dark" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-pane" type="button" role="tab">
+                        <i class="fas fa-key me-2 text-warning"></i>Đổi mật khẩu
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-bold text-dark" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders-pane" type="button" role="tab">
+                        <i class="fas fa-receipt me-2 text-warning"></i>Lịch sử đơn hàng ({{ user_orders.count }})
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body p-4">
+            <div class="tab-content" id="profileTabContent">
+
+                <!-- TAB 1: THÔNG TIN CÁ NHÂN -->
+                <div class="tab-pane fade show active" id="info-pane" role="tabpanel">
+                    <form method="post" action="{% url 'profile' %}">
+                        {% csrf_token %}
+                        <div class="row g-3 max-w-700">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">Họ và tên đệm</label>
+                                {{ profile_form.first_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-muted">Tên</label>
+                                {{ profile_form.last_name }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold small text-muted">Địa chỉ Email</label>
+                                {{ profile_form.email }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold small text-muted">Tên đăng nhập (Username)</label>
+                                <input type="text" class="form-control bg-light" value="{{ user.username }}" readonly disabled>
+                                <small class="text-muted">Tên đăng nhập là định danh duy nhất và không thể thay đổi.</small>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-warning fw-bold px-4 py-2">
+                                    <i class="fas fa-save me-1"></i> Lưu thông tin
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TAB 2: ĐỔI MẬT KHẨU -->
+                <div class="tab-pane fade" id="password-pane" role="tabpanel">
+                    <form method="post" action="{% url 'change_password' %}">
+                        {% csrf_token %}
+                        <div class="row g-3" style="max-width: 600px;">
+                            <div class="col-12">
+                                <label class="form-label fw-bold small text-muted">Mật khẩu hiện tại</label>
+                                <input type="password" name="old_password" class="form-control" placeholder="Nhập mật khẩu cũ của bạn" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold small text-muted">Mật khẩu mới</label>
+                                <input type="password" name="new_password1" class="form-control" placeholder="Nhập mật khẩu mới (ít nhất 8 ký tự)" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold small text-muted">Xác nhận mật khẩu mới</label>
+                                <input type="password" name="new_password2" class="form-control" placeholder="Nhập lại mật khẩu mới" required>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-dark fw-bold px-4 py-2">
+                                    <i class="fas fa-shield-alt me-1"></i> Cập nhật mật khẩu
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TAB 3: LỊCH SỬ ĐƠN HÀNG -->
+                <div class="tab-pane fade" id="orders-pane" role="tabpanel">
+                    {% if user_orders %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mã đơn</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Tổng thanh toán</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in user_orders %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">#{{ order.id }}</td>
+                                        <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                                        <td>
+                                            <ul class="list-unstyled mb-0 small">
+                                                {% for item in order.items.all %}
+                                                    <li>
+                                                        <i class="fas fa-angle-right text-muted me-1"></i>
+                                                        <strong>{{ item.product.name|default:"Sản phẩm đã gỡ" }}</strong>
+                                                        <span class="text-muted">x {{ item.quantity }}</span>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td class="fw-bold text-danger">{{ order.total_amount|floatformat:0 }} ₫</td>
+                                        <td><span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">Đã xác nhận</span></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <div class="text-muted mb-3" style="font-size: 48px;">🛍️</div>
+                            <h5 class="fw-bold text-muted">Bạn chưa có đơn hàng nào</h5>
+                            <p class="text-muted small">Khám phá các sản phẩm bóng chuyền chất lượng tại cửa hàng ngay hôm nay.</p>
+                            <a href="{% url 'product_list' %}" class="btn btn-warning fw-bold px-4">
+                                Mua sắm ngay
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}

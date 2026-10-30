@@ -18,13 +18,19 @@ Mở `http://127.0.0.1:8000/`. Trang đăng nhập: `/login/`; trang đăng ký:
 
 Nếu PowerShell chặn kích hoạt môi trường ảo, có thể dùng `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` trong cửa sổ terminal hiện tại rồi kích hoạt lại.
 
-## 2. Tạo tài khoản quản trị
+## 2. Tài khoản quản trị (Admin)
+
+Tài khoản quản trị mặc định đã được cấu hình sẵn trong hệ thống:
+- **Tên đăng nhập (Username):** `admin`
+- **Mật khẩu (Password):** `admin123`
+- **Quyền:** Quản trị viên tối cao (Superuser / Staff)
+- **Đăng nhập quản trị:** Truy cập `http://127.0.0.1:8000/admin/` hoặc đăng nhập tại `/login/` (tài khoản admin sẽ có thêm menu "Thêm sản phẩm" và "Quản trị" trên thanh điều hướng).
+
+Nếu bạn muốn tạo thêm tài khoản quản trị mới khác:
 
 ```powershell
 python manage.py createsuperuser
 ```
-
-Làm theo câu hỏi trên terminal để tạo tài khoản admin.
 
 ## 3. Chạy bằng Docker
 

@@ -61,6 +61,20 @@
                class="btn btn-outline-dark btn-lg ms-2">
                 Quay lại
             </a>
+
+            {% if user.is_staff %}
+                <div class="mt-4 pt-3 border-top">
+                    <span class="badge bg-warning text-dark mb-2">Thao tác Quản trị</span>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'edit_product' product.id %}" class="btn btn-outline-primary">
+                            <i class="fas fa-edit me-1"></i> Chỉnh sửa thông tin
+                        </a>
+                        <a href="{% url 'delete_product' product.id %}" class="btn btn-outline-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">
+                            <i class="fas fa-trash me-1"></i> Xóa sản phẩm
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 

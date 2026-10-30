@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chỉnh sửa sản phẩm: {{ product.name }} | King Volleyball{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 900px;">
+
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Bảng quản trị</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa sản phẩm</li>
+        </ol>
+    </nav>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+        <div class="card-header bg-dark text-white p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="fw-bold mb-1"><i class="fas fa-edit text-warning me-2"></i>Chỉnh sửa sản phẩm</h4>
+                    <p class="text-white-50 mb-0 small">Cập nhật thông tin chi tiết, giá bán và hình ảnh cho sản phẩm</p>
+                </div>
+                <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Quay lại Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Đã có lỗi xảy ra!</strong> Vui lòng kiểm tra lại các trường bên dưới.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+
+                <div class="row g-4">
+                    <div class="col-12">
+                        <label class="form-label fw-bold text-dark">Tên sản phẩm <span class="text-danger">*</span></label>
+                        {{ form.name }}
+                        {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark">Phân loại sản phẩm <span class="text-danger">*</span></label>
+                        {{ form.product_type }}
+                        {% if form.product_type.errors %}<div class="text-danger small">{{ form.product_type.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark">Nhóm hiển thị</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}<div class="text-danger small">{{ form.category.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark">Giá gốc (VND) <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            {{ form.price }}
+                            <span class="input-group-text">₫</span>
+                        </div>
+                        {% if form.price.errors %}<div class="text-danger small">{{ form.price.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark">Giảm giá (%)</label>
+                        <div class="input-group">
+                            {{ form.discount_percent }}
+                            <span class="input-group-text">%</span>
+                        </div>
+                        {% if form.discount_percent.errors %}<div class="text-danger small">{{ form.discount_percent.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-bold text-dark">Mô tả sản phẩm</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark">Ảnh sản phẩm</label>
+                        {% if product.image %}
+                            <div class="mb-2 d-flex align-items-center gap-2">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="rounded shadow-sm" style="width: 70px; height: 70px; object-fit: cover;">
+                                <small class="text-muted">Ảnh hiện tại đang sử dụng</small>
+                            </div>
+                        {% endif %}
+                        {{ form.image }}
+                        <small class="text-muted">Chọn ảnh mới nếu bạn muốn thay đổi ảnh cũ.</small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <label class="form-label fw-bold text-dark">Lượt bán</label>
+                                {{ form.sold_count }}
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label fw-bold text-dark">Đánh giá (sao)</label>
+                                {{ form.rating }}
+                            </div>
+                            <div class="col-12 mt-4">
+                                <div class="form-check form-switch fs-5">
+                                    {{ form.is_featured }}
+                                    <label class="form-check-label fs-6 fw-bold text-dark ms-2" for="{{ form.is_featured.id_for_label }}">
+                                        Đánh dấu là Sản phẩm nổi bật
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary px-4">
+                        Hủy bỏ
+                    </a>
+                    <button type="submit" class="btn btn-warning fw-bold px-5 py-2 shadow-sm">
+                        <i class="fas fa-save me-1"></i> Lưu thay đổi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
