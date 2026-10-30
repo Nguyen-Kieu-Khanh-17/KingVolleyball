@@ -1,0 +1,145 @@
+[
+  {
+    "name": "Bộ Quần Áo Bóng Chuyền Nam Nữ, Beyono Terra Vải Thoáng Mát, Hoạ Tiết Nổi Bật, Đường May Kỹ",
+    "product_type": "clothing",
+    "category": "normal",
+    "price": 92500.0,
+    "discount_percent": 10,
+    "rating": 4.5,
+    "sold_count": 0,
+    "is_featured": true,
+    "description": "Bộ đồ chất liệu vải thoải mái và thoáng mát, thoải mái tự do hoạt động mạnh và siêu bền"
+  },
+  {
+    "name": "SIÊU RẺ MIKASA Bóng Chuyền",
+    "product_type": "ball",
+    "category": "hot",
+    "price": 300000.0,
+    "discount_percent": 6,
+    "rating": 0.0,
+    "sold_count": 0,
+    "is_featured": false,
+    "description": "Quả Bóng Chuyền Chính Hãng Tiêu Chuẩn Thi Đấu Giá Rẻ Đủ Size Trẻ Em Người Lớn"
+  },
+  {
+    "name": "Bộ đồ bóng chuyền nam nữ",
+    "product_type": "clothing",
+    "category": "hot",
+    "price": 200000.0,
+    "discount_percent": 10,
+    "rating": 0.0,
+    "sold_count": 0,
+    "is_featured": true,
+    "description": "aknjksbvkjdsbvkndaknvkan"
+  },
+  {
+    "name": "Áo quần bóng chuyền nam nữ",
+    "product_type": "clothing",
+    "category": "hot",
+    "price": 50000.0,
+    "discount_percent": 0,
+    "rating": 0.0,
+    "sold_count": 0,
+    "is_featured": true,
+    "description": "snbls,bnslfkbmlb"
+  },
+  {
+    "name": "Áo quần bóng chuyền Nữ",
+    "product_type": "clothing",
+    "category": "hot",
+    "price": 100000.0,
+    "discount_percent": 100,
+    "rating": 0.0,
+    "sold_count": 0,
+    "is_featured": false,
+    "description": "sgvdsvjbsejvbnskfmv,smv ns,bjsvm msv"
+  },
+  {
+    "name": "Băng Quấn Đầu Gối",
+    "product_type": "accessories",
+    "category": "hot",
+    "price": 200000.0,
+    "discount_percent": 5,
+    "rating": 0.0,
+    "sold_count": 0,
+    "is_featured": false,
+    "description": "dbfdndfngng"
+  },
+  {
+    "name": "Xoitop Dây Đai Bóng Chuyền",
+    "product_type": "accessories",
+    "category": "hot",
+    "price": 300000.0,
+    "discount_percent": 5,
+    "rating": 0.0,
+    "sold_count": 0,
+    "is_featured": false,
+    "description": "dgbdszbhfrshb"
+  },
+  {
+    "name": "Băng khủy tay bóng chuyền",
+    "product_type": "accessories",
+    "category": "hot",
+    "price": 200000.0,
+    "discount_percent": 5,
+    "rating": 0.0,
+    "sold_count": 0,
+    "is_featured": false,
+    "description": "sfzskgmlskgnlkdnb lkszdnb"
+  },
+  {
+    "name": "Dây hỗ trợ phát Bóng chuyền",
+    "product_type": "accessories",
+    "category": "hot",
+    "price": 70000.0,
+    "discount_percent": 10,
+    "rating": 0.0,
+    "sold_count": 0,
+    "is_featured": false,
+    "description": "jhw sjjsdhjsjsdjsdshh"
+  },
+  {
+    "name": "Giày bóng chuyền Beyono Storm - Ngọc Thuân chuyên ngành cày sân bê tông, cao cổ dành cho nam và nữ",
+    "product_type": "shoes",
+    "category": "new",
+    "price": 1186000.0,
+    "discount_percent": 15,
+    "rating": 4.5,
+    "sold_count": 300,
+    "is_featured": true,
+    "description": "..."
+  },
+  {
+    "name": "Giày bóng chuyền Beyono Storm; Chuyên cày sân bê tông cho Nam và Nữ",
+    "product_type": "shoes",
+    "category": "new",
+    "price": 1200000.0,
+    "discount_percent": 5,
+    "rating": 4.9,
+    "sold_count": 50,
+    "is_featured": false,
+    "description": "...."
+  },
+  {
+    "name": "Giày bóng chuyền VHD Cabeto Sói Đầu Đàn cày sân bê tông không đau gối cho nam và nữ",
+    "product_type": "shoes",
+    "category": "new",
+    "price": 780000.0,
+    "discount_percent": 5,
+    "rating": 4.5,
+    "sold_count": 0,
+    "is_featured": true,
+    "description": "..."
+  },
+  {
+    "name": "Giày Thể Thao Bóng Chuyền Nam,Nữ Chuyên Cày Sân Bê Tông Beyono Limit III",
+    "product_type": "shoes",
+    "category": "new",
+    "price": 979000.0,
+    "discount_percent": 5,
+    "rating": 4.3,
+    "sold_count": 0,
+    "is_featured": false,
+    "description": "..."
+  }
+]
