@@ -371,6 +371,7 @@ def generate_qr_payment(request):
     qr = qrcode.make(qr_data)
 
     buffer = BytesIO()
+    # pyrefly: ignore[unexpected-keyword]
     qr.save(buffer, format='PNG')
     buffer.seek(0)
 
