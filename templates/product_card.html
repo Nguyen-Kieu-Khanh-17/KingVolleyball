@@ -1,83 +1,249 @@
+<div class="card kv-product-card h-100">
 
-<div class="card kv-product h-100">
-
-    <!-- PRODUCT IMAGE -->
-    <a href="{% url 'product_detail' product.id %}"
-       class="kv-product-link">
-
-        {% if product.image %}
-            <img src="{{ product.image.url }}"
-                 class="kv-product-img"
-                 alt="{{ product.name }}"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-
-            <div class="kv-image-placeholder" style="display:none;">
-                🏐
-            </div>
-        {% else %}
-            <div class="kv-image-placeholder">
-                🏐
-            </div>
-        {% endif %}
-
-    </a>
-
-    <!-- PRODUCT INFORMATION -->
-    <div class="card-body d-flex flex-column">
-
+    <!-- PRODUCT IMAGE BOX -->
+    <a href="{% url 'product_detail' product.id %}" class="kv-card-img-link">
         {% if product.discount_percent > 0 %}
-            <span class="badge bg-danger align-self-start mb-2">
+            <span class="kv-badge-discount">
                 -{{ product.discount_percent }}%
             </span>
         {% endif %}
 
-        <a href="{% url 'product_detail' product.id %}"
-           class="text-decoration-none">
+        {% if product.image %}
+            <img src="{{ product.image.url }}"
+                 class="kv-card-img"
+                 alt="{{ product.name }}"
+                 loading="lazy"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="kv-card-placeholder" style="display: none;">
+                🏐
+            </div>
+        {% else %}
+            <div class="kv-card-placeholder">
+                🏐
+            </div>
+        {% endif %}
+    </a>
 
-            <h6 class="card-title">
-                {{ product.name|truncatechars:45 }}
-            </h6>
+    <!-- PRODUCT INFORMATION BODY -->
+    <div class="card-body kv-card-body d-flex flex-column">
 
-        </a>
-
-        <!-- RATING -->
-        <div class="text-warning mb-2">
-            <i class="fas fa-star"></i>
-            {{ product.rating|default:0|floatformat:1 }}/5
+        <!-- CATEGORY OR BADGE -->
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="kv-category-tag">
+                {% if product.product_type == 'ball' %}Bóng chuyền
+                {% elif product.product_type == 'shoes' %}Giày thi đấu
+                {% elif product.product_type == 'clothing' %}Trang phục
+                {% elif product.product_type == 'accessories' %}Phụ kiện
+                {% else %}Chính hãng{% endif %}
+            </span>
+            <div class="kv-card-rating">
+                <i class="fas fa-star text-warning"></i>
+                <span>{{ product.rating|default:5.0|floatformat:1 }}</span>
+            </div>
         </div>
 
-        <!-- PRICE -->
-        <div class="mt-auto">
+        <!-- TITLE -->
+        <a href="{% url 'product_detail' product.id %}" class="kv-card-title-link">
+            <h6 class="kv-card-title" title="{{ product.name }}">
+                {{ product.name }}
+            </h6>
+        </a>
 
-            {% if product.discount_percent > 0 %}
-                <div class="kv-old-price">
-                    {{ product.price|floatformat:0 }} ₫
-                </div>
-            {% endif %}
-
-            <div class="kv-price mb-3">
-                {{ product.final_price|floatformat:0 }} ₫
+        <!-- PRICING & ACTIONS -->
+        <div class="mt-auto pt-2">
+            <div class="d-flex align-items-baseline gap-2 mb-3">
+                <span class="kv-card-price">
+                    {{ product.final_price|vnd }} ₫
+                </span>
+                {% if product.discount_percent > 0 %}
+                    <span class="kv-card-old-price">
+                        {{ product.price|vnd }} ₫
+                    </span>
+                {% endif %}
             </div>
 
-            <a href="{% url 'add_to_cart' product.id %}"
-               class="btn kv-btn w-100">
-
-                <i class="fas fa-cart-plus"></i>
-                Thêm vào giỏ
-
+            <a href="{% url 'add_to_cart' product.id %}" class="btn kv-card-btn-add w-100">
+                <i class="fas fa-shopping-bag me-1"></i> Thêm vào giỏ
             </a>
 
             {% if user.is_staff %}
-                <div class="d-flex gap-1 mt-2">
-                    <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-outline-primary flex-fill" title="Chỉnh sửa sản phẩm">
+                <div class="d-flex gap-1 mt-2 pt-2 border-top">
+                    <a href="{% url 'edit_product' product.id %}" class="btn btn-sm kv-btn-admin-edit flex-fill" title="Chỉnh sửa sản phẩm">
                         <i class="fas fa-edit me-1"></i>Sửa
                     </a>
-                    <a href="{% url 'delete_product' product.id %}" class="btn btn-sm btn-outline-danger" title="Xóa sản phẩm" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm: {{ product.name }}?');">
+                    <a href="{% url 'delete_product' product.id %}" class="btn btn-sm kv-btn-admin-delete" title="Xóa sản phẩm" onclick="return confirm('Bạn có chắc muốn xóa: {{ product.name }}?');">
                         <i class="fas fa-trash"></i>
                     </a>
                 </div>
             {% endif %}
-
         </div>
     </div>
 </div>
+
+<style>
+    .kv-product-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .kv-product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.1);
+        border-color: #cbd5e1;
+    }
+
+    .kv-card-img-link {
+        position: relative;
+        display: block;
+        background: #f8fafc;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .kv-card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 16px;
+        transition: transform 0.4s ease;
+    }
+
+    .kv-product-card:hover .kv-card-img {
+        transform: scale(1.06);
+    }
+
+    .kv-card-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 54px;
+        color: #cbd5e1;
+    }
+
+    .kv-badge-discount {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: #ef4444;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 999px;
+        z-index: 2;
+        box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+    }
+
+    .kv-card-body {
+        padding: 18px;
+    }
+
+    .kv-category-tag {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #94a3b8;
+        letter-spacing: 0.05em;
+    }
+
+    .kv-card-rating {
+        font-size: 12px;
+        font-weight: 600;
+        color: #334155;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .kv-card-title-link {
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .kv-card-title {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+        color: #0f172a;
+        margin-top: 6px;
+        margin-bottom: 12px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 42px;
+        transition: color 0.2s;
+    }
+
+    .kv-card-title-link:hover .kv-card-title {
+        color: #f97316;
+    }
+
+    .kv-card-price {
+        font-size: 18px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+    }
+
+    .kv-card-old-price {
+        font-size: 13px;
+        color: #94a3b8;
+        text-decoration: line-through;
+    }
+
+    .kv-card-btn-add {
+        background: #0f172a;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 16px;
+        border-radius: 999px;
+        border: none;
+        transition: all 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .kv-card-btn-add:hover {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px -4px rgba(249, 115, 22, 0.4);
+    }
+
+    .kv-btn-admin-edit {
+        background: #f1f5f9;
+        color: #334155;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 12px;
+    }
+    .kv-btn-admin-edit:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+    }
+
+    .kv-btn-admin-delete {
+        background: #fef2f2;
+        color: #ef4444;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 12px;
+    }
+    .kv-btn-admin-delete:hover {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+</style>

@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="vi">
@@ -6,9 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}King Volleyball | Cửa hàng thể thao{% endblock %}</title>
+    <title>{% block title %}King Volleyball | Cửa hàng thể thao bóng chuyền 4.0{% endblock %}</title>
 
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    
+    <!-- Google Fonts: Plus Jakarta Sans (Modern Clean Athletic Typography) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3 & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -17,284 +23,502 @@
 
     <style>
         :root {
+            --kv-font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --kv-bg: #f8fafc;
+            --kv-surface: #ffffff;
+            --kv-dark: #0f172a;
+            --kv-dark-soft: #1e293b;
+            --kv-primary: #0f172a;
             --kv-orange: #f97316;
-            --kv-orange-dark: #ea580c;
-            --kv-black: #111111;
-            --kv-gray: #666666;
-            --kv-light: #f5f5f5;
+            --kv-orange-glow: #ea580c;
+            --kv-orange-light: #fff7ed;
+            --kv-accent-cyan: #06b6d4;
+            --kv-gray-50: #f8fafc;
+            --kv-gray-100: #f1f5f9;
+            --kv-gray-200: #e2e8f0;
+            --kv-gray-400: #94a3b8;
+            --kv-gray-600: #475569;
+            --kv-gray-800: #1e293b;
+            --kv-radius-sm: 8px;
+            --kv-radius-md: 14px;
+            --kv-radius-lg: 20px;
+            --kv-radius-full: 9999px;
+            --kv-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --kv-shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+            --kv-shadow-hover: 0 16px 32px -4px rgba(15, 23, 42, 0.12);
+            --kv-shadow-glow: 0 8px 24px -4px rgba(249, 115, 22, 0.35);
         }
 
         * {
             box-sizing: border-box;
+            letter-spacing: -0.01em;
         }
 
         body {
             margin: 0;
-            background: #f5f5f5 !important;
-            color: #222222 !important;
-            font-family: Arial, Helvetica, sans-serif;
+            background: var(--kv-bg) !important;
+            color: var(--kv-dark) !important;
+            font-family: var(--kv-font-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Modern Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: var(--kv-radius-full);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
         a {
             text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* NAVBAR */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 9999;
-            background: #111111 !important;
-            min-height: 72px;
-            box-shadow: 0 3px 15px rgba(0,0,0,.15);
+        /* TOP PROMO BAR 4.0 */
+        .kv-topbar {
+            background: #0f172a;
+            color: #94a3b8;
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        .navbar .container {
-            gap: 15px;
+        .kv-topbar a {
+            color: #f1f5f9;
         }
-
-        .navbar-brand {
-            color: white !important;
-            font-size: 22px;
-            letter-spacing: .3px;
-            white-space: nowrap;
-        }
-
-        .brand-mark {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 43px;
-            height: 43px;
-            margin-right: 9px;
-            border-radius: 50%;
-            background: var(--kv-orange);
-            font-size: 24px;
-        }
-
-        .navbar .nav-link {
-            color: #eeeeee !important;
-            font-weight: 600;
-            padding: 12px 10px !important;
-            transition: .2s;
-        }
-
-        .navbar .nav-link:hover {
-            color: var(--kv-orange) !important;
-        }
-
-        .navbar .nav-link i {
-            margin-right: 5px;
-        }
-
-        .navbar-toggler {
-            border-color: #777;
-        }
-
-        .navbar-toggler:focus {
-            box-shadow: none;
-        }
-
-        .kv-search {
-            max-width: 340px;
-            width: 100%;
-        }
-
-        .kv-search .form-control {
-            border-radius: 25px 0 0 25px;
-            border: none;
-        }
-
-        .kv-search .btn {
-            background: var(--kv-orange);
-            color: white;
-            border: none;
-            border-radius: 0 25px 25px 0;
-        }
-
-        .kv-search .btn:hover {
-            background: var(--kv-orange-dark);
-        }
-
-        .btn-logout {
-            background: none;
-            border: none;
-            color: white;
-            padding: 12px 10px;
-            font-weight: 600;
-        }
-
-        .btn-logout:hover {
+        .kv-topbar a:hover {
             color: var(--kv-orange);
         }
 
-        /* MAIN CONTENT */
-        .content {
-            min-height: 65vh;
-            padding-bottom: 35px;
+        /* NAVBAR 4.0 GLASSMORPHISM */
+        .navbar-kv {
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+            background: rgba(255, 255, 255, 0.92) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+            padding: 14px 0;
+            transition: all 0.3s ease;
         }
 
-        /* PAGE CONTAINER */
-        .kv-page {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 35px 15px;
-        }
-
-        /* SECTION TITLE */
-        .kv-heading {
+        .navbar-brand-kv {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-weight: 800;
-            color: #222222;
-            border-left: 5px solid var(--kv-orange);
-            padding-left: 13px;
-            margin-bottom: 24px;
+            font-size: 21px;
+            color: var(--kv-dark) !important;
+            letter-spacing: -0.03em;
         }
 
-        /* PRODUCT CARD */
-        .kv-product {
-            height: 100%;
-            background: white;
-            border: 1px solid #eeeeee;
+        .brand-icon-box {
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
-            overflow: hidden;
-            transition: .25s;
-            box-shadow: 0 3px 12px rgba(0,0,0,.04);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+            transition: transform 0.3s ease;
         }
 
-        .kv-product:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,.12);
+        .navbar-brand-kv:hover .brand-icon-box {
+            transform: rotate(-10deg) scale(1.08);
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
         }
 
-        .kv-product-link {
-            display: block;
-            overflow: hidden;
-            background: #f7f7f7;
+        .brand-text-accent {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .kv-product-img {
-            display: block;
+        /* MODERN PILL SEARCH BAR */
+        .kv-search-box {
+            position: relative;
+            max-width: 380px;
             width: 100%;
-            height: 220px;
-            object-fit: contain;
-            background: #f7f7f7;
-            padding: 12px;
-            transition: transform .3s;
         }
 
-        .kv-product:hover .kv-product-img {
-            transform: scale(1.04);
+        .kv-search-input {
+            width: 100%;
+            padding: 10px 45px 10px 20px;
+            border-radius: var(--kv-radius-full);
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+            color: var(--kv-dark);
+            transition: all 0.25s ease;
         }
 
-        .kv-image-placeholder {
-            height: 220px;
+        .kv-search-input:focus {
+            outline: none;
+            background: #ffffff;
+            border-color: var(--kv-dark);
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+        }
+
+        .kv-search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border-radius: var(--kv-radius-full);
+            background: var(--kv-dark);
+            color: #ffffff;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f7f7f7;
-            color: #bbbbbb;
-            font-size: 65px;
+            font-size: 13px;
+            transition: all 0.2s;
         }
 
-        .kv-product .card-body {
-            padding: 16px;
-        }
-
-        .kv-product .card-title {
-            color: #222222;
-            font-weight: 700;
-            line-height: 1.5;
-            min-height: 42px;
-        }
-
-        .kv-price {
-            color: var(--kv-orange-dark);
-            font-size: 18px;
-            font-weight: 800;
-        }
-
-        .kv-old-price {
-            color: #999999;
-            text-decoration: line-through;
-            font-size: 14px;
-        }
-
-        .kv-btn {
+        .kv-search-btn:hover {
             background: var(--kv-orange);
-            color: white;
-            border: none;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* NAV LINKS */
+        .navbar-kv .nav-link {
+            color: #334155 !important;
             font-weight: 600;
+            font-size: 14px;
+            padding: 8px 14px !important;
+            border-radius: var(--kv-radius-full);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .kv-btn:hover {
-            background: var(--kv-orange-dark);
-            color: white;
+        .navbar-kv .nav-link:hover {
+            color: var(--kv-dark) !important;
+            background: #f1f5f9;
         }
 
-        /* BUTTONS */
-        .btn-main {
-            background: var(--kv-orange);
-            color: white;
-            border: none;
+        .navbar-kv .nav-link.active {
+            color: var(--kv-dark) !important;
+            background: #e2e8f0;
         }
 
-        .btn-main:hover {
-            background: var(--kv-orange-dark);
-            color: white;
+        .nav-btn-pill {
+            padding: 8px 18px !important;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--kv-radius-full);
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.25s ease;
         }
 
-        /* MESSAGES */
-        .site-messages {
+        .nav-btn-dark {
+            background: var(--kv-dark);
+            color: #ffffff !important;
+        }
+
+        .nav-btn-dark:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+
+        .nav-btn-orange {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: #ffffff !important;
+        }
+
+        .nav-btn-orange:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            box-shadow: var(--kv-shadow-glow);
+            transform: translateY(-1px);
+        }
+
+        .btn-logout-pill {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 7px 15px;
+            border-radius: var(--kv-radius-full);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-logout-pill:hover {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #ef4444;
+        }
+
+        /* MAIN CONTENT WRAPPER */
+        .content-main {
+            min-height: 75vh;
+            padding-bottom: 60px;
+        }
+
+        /* SECTION HEADING 4.0 */
+        .kv-section-header {
+            margin-bottom: 28px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .kv-section-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--kv-dark);
+            letter-spacing: -0.03em;
+            margin-bottom: 4px;
             position: relative;
-            z-index: 10;
-            padding-top: 12px;
         }
 
-        /* FOOTER */
-        footer {
-            background: #111111;
-            color: #eeeeee;
-            padding: 35px 15px;
-            text-align: center;
-            margin-top: 30px;
+        .kv-section-subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 0;
         }
 
-        footer a {
-            color: #ff9a45;
+        /* MODERN BUTTONS */
+        .btn-kv-primary {
+            background: var(--kv-dark);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 700;
+            border-radius: var(--kv-radius-full);
+            transition: all 0.25s ease;
+            box-shadow: var(--kv-shadow-sm);
         }
 
-        footer a:hover {
-            color: white;
+        .btn-kv-primary:hover {
+            background: #1e293b;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: var(--kv-shadow-card);
+        }
+
+        .btn-kv-orange {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 700;
+            border-radius: var(--kv-radius-full);
+            transition: all 0.25s ease;
+        }
+
+        .btn-kv-orange:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: var(--kv-shadow-glow);
+        }
+
+        .btn-kv-outline {
+            background: #ffffff;
+            color: var(--kv-dark);
+            border: 1.5px solid #e2e8f0;
+            padding: 11px 22px;
+            font-weight: 600;
+            border-radius: var(--kv-radius-full);
+            transition: all 0.2s ease;
+        }
+
+        .btn-kv-outline:hover {
+            background: #f8fafc;
+            border-color: var(--kv-dark);
+            color: var(--kv-dark);
+            transform: translateY(-1px);
+        }
+
+        /* FLASH ALERTS 4.0 */
+        .site-alerts-container {
+            margin-top: 18px;
+            margin-bottom: 10px;
+        }
+
+        .alert-kv {
+            border-radius: var(--kv-radius-md);
+            border: none;
+            box-shadow: var(--kv-shadow-card);
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* FOOTER 4.0 NIKE/ADIDAS MINIMALIST */
+        .footer-kv {
+            background: #090d16;
+            color: #94a3b8;
+            padding: 70px 0 35px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 60px;
+        }
+
+        .footer-heading {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            padding-left: 4px;
+        }
+
+        .footer-social-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--kv-radius-full);
+            background: rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            transition: all 0.25s ease;
+        }
+
+        .footer-social-btn:hover {
+            background: var(--kv-orange);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .footer-newsletter-box {
+            position: relative;
+            max-width: 320px;
+        }
+
+        .footer-newsletter-input {
+            width: 100%;
+            padding: 11px 45px 11px 16px;
+            border-radius: var(--kv-radius-full);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            font-size: 13px;
+        }
+
+        .footer-newsletter-input:focus {
+            outline: none;
+            border-color: var(--kv-orange);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .footer-newsletter-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: var(--kv-radius-full);
+            background: var(--kv-orange);
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .footer-divider {
+            border-color: rgba(255, 255, 255, 0.08);
+            margin: 40px 0 25px 0;
+        }
+
+        .footer-bottom {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* BACK TO TOP FLOATING BUTTON */
+        #btnBackToTop {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--kv-radius-full);
+            background: var(--kv-dark);
+            color: #ffffff;
+            border: none;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.25s;
+        }
+
+        #btnBackToTop:hover {
+            background: var(--kv-orange);
+            transform: translateY(-3px);
         }
 
         @media (max-width: 991px) {
-            .navbar .navbar-collapse {
-                padding: 15px 0;
+            .navbar-kv .navbar-collapse {
+                background: #ffffff;
+                padding: 18px;
+                border-radius: var(--kv-radius-lg);
+                margin-top: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             }
-
-            .kv-search {
+            .kv-search-box {
                 max-width: 100%;
-                margin: 10px 0;
+                margin: 12px 0;
             }
-
-            .navbar-nav {
-                align-items: flex-start !important;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .kv-product-img,
-            .kv-image-placeholder {
-                height: 160px;
-            }
-
-            .kv-product .card-body {
-                padding: 10px;
-            }
-
-            .kv-price {
-                font-size: 16px;
+            .navbar-kv .navbar-nav {
+                gap: 6px;
             }
         }
     </style>
@@ -302,46 +526,61 @@
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark">
+<!-- TOP PROMO BAR -->
+<div class="kv-topbar">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div>
+            <span class="badge bg-warning text-dark me-2 fw-bold" style="font-size: 10px; border-radius: 999px;">HOT</span>
+            <span>King Volleyball 4.0 — Đổi trả miễn phí 30 ngày &amp; Miễn phí vận chuyển toàn quốc</span>
+        </div>
+        <div class="d-none d-md-flex align-items-center gap-3">
+            <a href="tel:1990882525" class="d-flex align-items-center gap-1">
+                <i class="fas fa-headset text-warning"></i> Hotline: 199 088 2525
+            </a>
+            <span>•</span>
+            <a href="{% url 'admin_login' %}">
+                <i class="fas fa-shield-alt text-warning"></i> Cổng Admin
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR 4.0 -->
+<nav class="navbar navbar-expand-lg navbar-kv">
     <div class="container">
 
-        <!-- LOGO -->
-        <a class="navbar-brand fw-bold d-flex align-items-center"
-           href="{% url 'home' %}">
-            <span class="brand-mark">🏐</span>
-            <span>King Volleyball</span>
+        <!-- LOGO BRAND -->
+        <a class="navbar-brand navbar-brand-kv" href="{% url 'home' %}">
+            <span class="brand-icon-box">🏐</span>
+            <span>King <span class="brand-text-accent">Volleyball</span></span>
         </a>
 
-        <!-- MOBILE MENU -->
-        <button class="navbar-toggler" type="button"
+        <!-- MOBILE MENU BUTTON -->
+        <button class="navbar-toggler border-0 shadow-none" type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
+                data-bs-target="#navbarKvNav"
+                aria-controls="navbarKvNav"
                 aria-expanded="false"
                 aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <i class="fas fa-bars fs-4 text-dark"></i>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarKvNav">
 
-            <!-- SEARCH -->
-            <form class="d-flex mx-lg-auto kv-search"
-                  action="{% url 'search' %}"
-                  method="get">
-
-                <input class="form-control"
+            <!-- SEARCH BAR 4.0 -->
+            <form class="kv-search-box mx-lg-auto" action="{% url 'search' %}" method="get">
+                <input class="kv-search-input"
                        type="search"
-                       placeholder="Tìm kiếm sản phẩm..."
-                       name="q">
-
-                <button class="btn px-3" type="submit">
+                       placeholder="Tìm kiếm giày, bóng, phụ kiện..."
+                       name="q"
+                       autocomplete="off">
+                <button class="kv-search-btn" type="submit" aria-label="Tìm kiếm">
                     <i class="fas fa-search"></i>
                 </button>
             </form>
 
-            <!-- MENU -->
-            <ul class="navbar-nav ms-auto align-items-lg-center">
+            <!-- NAVIGATION ITEMS -->
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home' %}">
@@ -356,8 +595,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cart' %}">
-                        <i class="fas fa-shopping-cart"></i> Giỏ hàng
+                    <a class="nav-link position-relative" href="{% url 'cart' %}">
+                        <i class="fas fa-shopping-bag"></i> Giỏ hàng
                     </a>
                 </li>
 
@@ -366,60 +605,52 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profile' %}">
                             <i class="fas fa-user-circle"></i>
-                            {{ user.username }}
+                            <span>{{ user.username }}</span>
                             {% if user.is_staff %}
-                                <span class="badge bg-warning text-dark ms-1" style="font-size: 11px;">Admin</span>
+                                <span class="badge bg-warning text-dark ms-1" style="font-size: 10px; border-radius: 999px;">Admin</span>
                             {% endif %}
                         </a>
                     </li>
 
                     {% if user.is_staff %}
                         <li class="nav-item">
-                            <a class="nav-link text-warning fw-semibold" href="{% url 'admin_dashboard' %}">
-                                <i class="fas fa-chart-line"></i> Bảng điều khiển
+                            <a class="nav-link text-warning fw-bold" href="{% url 'admin_dashboard' %}">
+                                <i class="fas fa-chart-line"></i> Dashboard
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'add_product' %}">
                                 <i class="fas fa-plus-circle"></i> Thêm SP
                             </a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/" target="_blank">
-                                <i class="fas fa-cog"></i> Django Admin
-                            </a>
-                        </li>
                     {% endif %}
 
-                    <li class="nav-item">
-                        <form method="post" action="{% url 'logout' %}">
+                    <li class="nav-item ms-lg-2">
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
                             {% csrf_token %}
-                            <button type="submit" class="btn-logout">
-                                <i class="fas fa-sign-out-alt"></i>
-                                Đăng xuất
+                            <button type="submit" class="btn-logout-pill">
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
                             </button>
                         </form>
                     </li>
 
                 {% else %}
 
-                    <li class="nav-item">
+                    <li class="nav-item ms-lg-2">
                         <a class="nav-link" href="{% url 'login' %}">
-                            <i class="fas fa-sign-in-alt me-1"></i> Đăng nhập
+                            <i class="fas fa-sign-in-alt"></i> Đăng nhập
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">
-                            <i class="fas fa-user-plus me-1"></i> Đăng ký
+                        <a class="nav-btn-pill nav-btn-dark ms-lg-1" href="{% url 'register' %}">
+                            <i class="fas fa-user-plus"></i> Đăng ký
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-warning fw-bold" href="{% url 'admin_login' %}">
-                            <i class="fas fa-shield-alt me-1"></i> Cổng Admin
+                        <a class="nav-btn-pill nav-btn-orange ms-lg-1" href="{% url 'admin_login' %}">
+                            <i class="fas fa-shield-alt"></i> Admin
                         </a>
                     </li>
 
@@ -429,67 +660,132 @@
     </div>
 </nav>
 
-<!-- FLASH MESSAGES -->
+<!-- MESSAGES -->
 {% if messages %}
-<div class="container site-messages">
+<div class="container site-alerts-container">
     {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
-             role="alert">
-            {{ message }}
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close">
-            </button>
+        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show alert-kv" role="alert">
+            <i class="fas fa-info-circle fs-5"></i>
+            <div class="flex-grow-1">{{ message }}</div>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
 </div>
 {% endif %}
 
 <!-- MAIN CONTENT -->
-<main class="content">
+<main class="content-main">
     {% block content %}{% endblock %}
 </main>
 
-<!-- FOOTER -->
-<footer>
+<!-- FOOTER 4.0 NIKE/ADIDAS MINIMALIST -->
+<footer class="footer-kv">
     <div class="container">
-        <h4 class="fw-bold mb-3">
-            🏐 KING VOLLEYBALL
-        </h4>
+        <div class="row g-5">
 
-        <p class="mb-2">
-            Đồng hành cùng đam mê bóng chuyền.
-        </p>
+            <!-- Column 1: Brand Ethos -->
+            <div class="col-lg-4 col-md-6">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="brand-icon-box" style="width: 36px; height: 36px; font-size: 17px;">🏐</span>
+                    <span class="fs-4 fw-bold text-white">King <span class="brand-text-accent">Volleyball</span></span>
+                </div>
+                <p class="text-secondary small mb-4" style="line-height: 1.7;">
+                    Hệ sinh thái bóng chuyền hàng đầu Việt Nam. Cung cấp trang thiết bị, giày thi đấu và phụ kiện chính hãng đạt chuẩn quốc tế cùng trải nghiệm mua sắm công nghệ 4.0.
+                </p>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="#" class="footer-social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="footer-social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="footer-social-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" class="footer-social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
 
-        <p class="mb-1">
-            <i class="fas fa-phone"></i>
-            Liên hệ:
-            <a href="tel:1990882525">199 088 2525</a>
-        </p>
+            <!-- Column 2: Quick Links -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <h5 class="footer-heading">Khám phá</h5>
+                <ul class="footer-links">
+                    <li><a href="{% url 'home' %}">Trang chủ</a></li>
+                    <li><a href="{% url 'product_list' %}">Tất cả sản phẩm</a></li>
+                    <li><a href="{% url 'product_list' %}?type=ball">Bóng chuyền</a></li>
+                    <li><a href="{% url 'product_list' %}?type=shoes">Giày thi đấu</a></li>
+                    <li><a href="{% url 'product_list' %}?type=clothing">Quần áo thể thao</a></li>
+                    <li><a href="{% url 'cart' %}">Giỏ hàng</a></li>
+                </ul>
+            </div>
 
-        <p class="mb-3">
-            <i class="fas fa-envelope"></i>
-            Email:
-            <a href="mailto:volleyball@gmail.com">
-                volleyball@gmail.com
-            </a>
-        </p>
+            <!-- Column 3: Customer Care -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <h5 class="footer-heading">Hỗ trợ 24/7</h5>
+                <ul class="footer-links">
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Đổi trả 30 ngày</a></li>
+                    <li><a href="#">Hướng dẫn chọn cỡ</a></li>
+                    <li><a href="#">Phương thức thanh toán</a></li>
+                    <li><a href="#">Tra cứu vận chuyển</a></li>
+                    <li><a href="{% url 'admin_login' %}">Cổng quản trị viên</a></li>
+                </ul>
+            </div>
 
-        <hr class="border-secondary">
+            <!-- Column 4: Newsletter & Contact -->
+            <div class="col-lg-4 col-md-6">
+                <h5 class="footer-heading">Bản tin King Club</h5>
+                <p class="text-secondary small mb-3">
+                    Đăng ký để nhận voucher giảm giá 15% cho đơn hàng đầu tiên và thông tin sản phẩm mới nhất.
+                </p>
+                <form class="footer-newsletter-box mb-4" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã đăng ký nhận bản tin King Volleyball!');">
+                    <input type="email" class="footer-newsletter-input" placeholder="Nhập địa chỉ email..." required>
+                    <button class="footer-newsletter-btn" type="submit" aria-label="Gửi">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
 
-        <small>
-            © {% now "Y" %} King Volleyball. All Rights Reserved.
-        </small>
-        <div class="mt-2">
-            <a href="{% url 'admin_login' %}" class="text-secondary small text-decoration-none">
-                <i class="fas fa-lock me-1"></i> Cổng Quản trị viên King Volleyball
-            </a>
+                <div class="small text-secondary">
+                    <div class="mb-1"><i class="fas fa-map-marker-alt text-warning me-2"></i> Hà Nội &amp; TP. Hồ Chí Minh, Việt Nam</div>
+                    <div class="mb-1"><i class="fas fa-phone-alt text-warning me-2"></i> 199 088 2525 (Miễn phí)</div>
+                    <div><i class="fas fa-envelope text-warning me-2"></i> support@kingvolleyball.vn</div>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="footer-divider">
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 footer-bottom">
+            <div>
+                © {% now "Y" %} King Volleyball Inc. All rights reserved. Phong cách thể thao tối giản 4.0.
+            </div>
+            <div class="d-flex align-items-center gap-3 text-secondary">
+                <span><i class="fab fa-cc-visa fa-lg"></i></span>
+                <span><i class="fab fa-cc-mastercard fa-lg"></i></span>
+                <span class="badge bg-dark border border-secondary text-white-50 px-2">VietQR</span>
+                <span class="badge bg-dark border border-secondary text-white-50 px-2">MoMo</span>
+                <span class="badge bg-dark border border-secondary text-white-50 px-2">VNPAY</span>
+            </div>
         </div>
     </div>
 </footer>
 
+<!-- BACK TO TOP BUTTON -->
+<button id="btnBackToTop" title="Lên đầu trang" aria-label="Lên đầu trang">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Back to top floating button logic
+    const btnBackToTop = document.getElementById("btnBackToTop");
+    window.addEventListener("scroll", function() {
+        if (window.scrollY > 300) {
+            btnBackToTop.style.display = "flex";
+        } else {
+            btnBackToTop.style.display = "none";
+        }
+    });
+    btnBackToTop.addEventListener("click", function() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+</script>
 
 {% block extra_js %}{% endblock %}
 

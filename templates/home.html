@@ -1,333 +1,564 @@
-
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}King Volleyball | Cửa hàng bóng chuyền{% endblock %}
+{% block title %}King Volleyball 4.0 | Cửa hàng thể thao bóng chuyền chính hãng{% endblock %}
 
 {% block content %}
 
 <style>
-    /* HERO */
-    .kv-hero {
-        min-height: 450px;
-        display: flex;
+    /* HERO SECTION 4.0 NIKE/ADIDAS MINIMALIST */
+    .hero-kv-4 {
+        position: relative;
+        background: linear-gradient(135deg, #090d16 0%, #111827 50%, #1e293b 100%);
+        color: #ffffff;
+        padding: 90px 0 110px 0;
+        overflow: hidden;
+    }
+
+    .hero-kv-4::before {
+        content: "";
+        position: absolute;
+        top: -20%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(249, 115, 22, 0.18) 0%, rgba(249, 115, 22, 0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .hero-kv-4::after {
+        content: "";
+        position: absolute;
+        bottom: -20%;
+        left: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(6, 182, 212, 0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .hero-pill-tag {
+        display: inline-flex;
         align-items: center;
-        color: white;
-        background:
-            linear-gradient(90deg, rgba(0,0,0,.88), rgba(0,0,0,.25)),
-            url("https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=1600&q=85")
-            center/cover no-repeat;
+        gap: 8px;
+        padding: 8px 18px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fed7aa;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        backdrop-filter: blur(10px);
+        margin-bottom: 24px;
     }
 
-    .kv-hero-content {
-        max-width: 650px;
-        padding-top: 40px;
-        padding-bottom: 40px;
-    }
-
-    .kv-hero h1 {
-        font-size: clamp(2.3rem, 5vw, 4.2rem);
+    .hero-title-4 {
+        font-size: clamp(2.8rem, 6vw, 4.8rem);
         font-weight: 900;
-        line-height: 1.15;
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+        margin-bottom: 24px;
     }
 
-    .kv-hero p {
+    .hero-title-gradient {
+        background: linear-gradient(135deg, #ffffff 30%, #f97316 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc-4 {
         font-size: 18px;
         line-height: 1.7;
+        color: #94a3b8;
+        max-width: 560px;
+        margin-bottom: 36px;
     }
 
-    .kv-hero-btn {
-        background: #f97316;
-        color: white;
-        padding: 13px 28px;
-        border-radius: 7px;
+    .hero-cta-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .hero-btn-main {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        color: #ffffff;
+        padding: 16px 36px;
+        border-radius: 999px;
         font-weight: 700;
+        font-size: 16px;
         border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 10px 30px -5px rgba(249, 115, 22, 0.5);
+        transition: all 0.3s ease;
     }
 
-    .kv-hero-btn:hover {
-        background: #ea580c;
-        color: white;
+    .hero-btn-main:hover {
+        background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+        transform: translateY(-3px);
+        color: #ffffff;
+        box-shadow: 0 15px 35px -5px rgba(249, 115, 22, 0.6);
     }
 
-    /* HOME SECTIONS */
-    .kv-section {
-        padding-top: 42px;
-        padding-bottom: 15px;
+    .hero-btn-secondary {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        padding: 16px 32px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
     }
 
-    /* CATEGORY */
-    .kv-category {
+    .hero-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .hero-visual-card {
+        position: relative;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5);
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .hero-visual-img {
+        width: 100%;
+        height: 480px;
+        object-fit: cover;
         display: block;
-        padding: 25px 12px;
-        background: white;
-        border: 1px solid #eeeeee;
-        border-radius: 12px;
-        text-align: center;
-        color: #222;
-        height: 100%;
-        transition: .25s;
-        box-shadow: 0 3px 12px rgba(0,0,0,.04);
+        transition: transform 0.6s ease;
     }
 
-    .kv-category:hover {
-        background: #fff3e9;
-        border-color: #f97316;
-        color: #ea580c;
-        transform: translateY(-5px);
+    .hero-visual-card:hover .hero-visual-img {
+        transform: scale(1.04);
     }
 
-    .kv-category .emoji {
-        display: block;
-        font-size: 42px;
-        margin-bottom: 12px;
+    .hero-float-badge {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        right: 24px;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 18px;
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
-    .kv-category strong {
-        font-size: 15px;
-    }
-
-    /* PROMOTION BANNER */
-    .kv-promotion {
-        background: linear-gradient(120deg, #171717, #393939);
-        color: white;
+    /* VALUE PROPOSITIONS BAR */
+    .value-props-bar {
+        background: #ffffff;
+        border-radius: 20px;
         padding: 30px;
-        border-radius: 15px;
-        margin-top: 35px;
+        box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05);
+        margin-top: -45px;
+        position: relative;
+        z-index: 10;
+        border: 1px solid #f1f5f9;
     }
 
-    .kv-promotion span {
-        color: #ff9a45;
+    .value-prop-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
     }
 
-    @media (max-width: 576px) {
-        .kv-hero {
-            min-height: 360px;
-        }
+    .value-prop-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: #0f172a;
+        flex-shrink: 0;
+        transition: all 0.25s ease;
+    }
 
-        .kv-hero p {
-            font-size: 15px;
-        }
+    .value-prop-item:hover .value-prop-icon {
+        background: #fff7ed;
+        color: #f97316;
+        transform: scale(1.08);
+    }
 
-        .kv-promotion {
-            padding: 20px;
+    /* MODERN MINIMALIST CATEGORY TILES */
+    .kv-cat-card-4 {
+        display: block;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 32px 20px;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .kv-cat-card-4:hover {
+        transform: translateY(-8px);
+        border-color: #cbd5e1;
+        box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.1);
+    }
+
+    .kv-cat-icon-wrap {
+        width: 76px;
+        height: 76px;
+        border-radius: 22px;
+        background: #f8fafc;
+        margin: 0 auto 18px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        transition: all 0.3s ease;
+    }
+
+    .kv-cat-card-4:hover .kv-cat-icon-wrap {
+        background: #0f172a;
+        color: #ffffff;
+        transform: rotate(8deg) scale(1.1);
+    }
+
+    .kv-cat-title {
+        font-size: 16px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 4px;
+        letter-spacing: -0.02em;
+    }
+
+    .kv-cat-sub {
+        font-size: 13px;
+        color: #94a3b8;
+    }
+
+    /* PROMO BANNER 4.0 */
+    .kv-promo-banner-4 {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        border-radius: 24px;
+        padding: 50px 40px;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        margin: 60px 0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.2);
+    }
+
+    .kv-promo-banner-4::after {
+        content: "KING";
+        position: absolute;
+        right: -30px;
+        bottom: -40px;
+        font-size: 180px;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.03);
+        pointer-events: none;
+        line-height: 1;
+    }
+
+    @media (max-width: 991px) {
+        .hero-kv-4 {
+            padding: 60px 0 80px 0;
+        }
+        .hero-visual-card {
+            margin-top: 40px;
+        }
+        .hero-visual-img {
+            height: 360px;
+        }
+        .value-props-bar {
+            margin-top: 20px;
         }
     }
 </style>
 
-<!-- HERO BANNER -->
-<section class="kv-hero">
-
+<!-- 1. HERO BANNER 4.0 -->
+<section class="hero-kv-4">
     <div class="container">
+        <div class="row align-items-center g-5">
 
-        <div class="kv-hero-content">
+            <!-- Hero Text Content -->
+            <div class="col-lg-6">
+                <div class="hero-pill-tag">
+                    <i class="fas fa-bolt text-warning"></i> Thế hệ thể thao 4.0
+                </div>
 
-            <span class="badge bg-warning text-dark mb-3 px-3 py-2">
-                KING VOLLEYBALL
-            </span>
+                <h1 class="hero-title-4">
+                    BỨT PHÁ <br>
+                    <span class="hero-title-gradient">MỌI GIỚI HẠN</span>
+                </h1>
 
-            <h1>
-                CHINH PHỤC
-                <br>
-                SÂN BÓNG CỦA BẠN
-            </h1>
+                <p class="hero-desc-4">
+                    Trang bị đỉnh cao cùng các dòng bóng, giày thi đấu và phụ kiện bóng chuyền tiêu chuẩn Olympic. Nâng tầm sức bật và kiểm soát tuyệt đối trên sân đấu.
+                </p>
 
-            <p class="my-4">
-                Khám phá các sản phẩm bóng chuyền chất lượng.
-                Trang bị tốt hơn, thi đấu tự tin hơn và
-                cùng bạn chinh phục mọi trận đấu.
-            </p>
+                <div class="hero-cta-group">
+                    <a href="{% url 'product_list' %}" class="hero-btn-main">
+                        <span>Khám phá ngay</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="{% url 'product_list' %}?type=shoes" class="hero-btn-secondary">
+                        <i class="fas fa-shoe-prints"></i>
+                        <span>Bộ sưu tập giày 4.0</span>
+                    </a>
+                </div>
+            </div>
 
-            <a href="{% url 'product_list' %}"
-               class="btn kv-hero-btn">
-
-                <i class="fas fa-shopping-bag"></i>
-                Khám phá sản phẩm
-
-            </a>
+            <!-- Hero Visual Showcase -->
+            <div class="col-lg-6">
+                <div class="hero-visual-card">
+                    <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=1200&q=85"
+                         alt="King Volleyball Athletic 4.0"
+                         class="hero-visual-img">
+                    <div class="hero-float-badge">
+                        <div>
+                            <div class="text-white fw-bold mb-0">Đệm khí Air-Spike Pro</div>
+                            <small class="text-white-50">Tối ưu lực bật nhảy +18%</small>
+                        </div>
+                        <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill">
+                            Chuẩn FIVB
+                        </span>
+                    </div>
+                </div>
+            </div>
 
         </div>
-
     </div>
-
 </section>
 
 <div class="container">
 
-    <!-- CATEGORIES -->
-    <section class="kv-section">
-
-        <h2 class="kv-heading">
-            Danh mục sản phẩm
-        </h2>
-
-        <div class="row row-cols-2 row-cols-md-4 g-3">
-
-            <div class="col">
-                <a class="kv-category"
-                   href="{% url 'product_list' %}?type=ball">
-
-                    <span class="emoji">🏐</span>
-                    <strong>Bóng chuyền</strong>
-
-                </a>
-            </div>
-
-            <div class="col">
-                <a class="kv-category"
-                   href="{% url 'product_list' %}?type=shoes">
-
-                    <span class="emoji">👟</span>
-                    <strong>Giày bóng chuyền</strong>
-
-                </a>
-            </div>
-
-            <div class="col">
-                <a class="kv-category"
-                   href="{% url 'product_list' %}?type=clothing">
-
-                    <span class="emoji">👕</span>
-                    <strong>Quần áo bóng chuyền</strong>
-
-                </a>
-            </div>
-
-            <div class="col">
-                <a class="kv-category"
-                   href="{% url 'product_list' %}?type=accessories">
-
-                    <span class="emoji">🎒</span>
-                    <strong>Phụ kiện</strong>
-
-                </a>
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- PROMOTION -->
-    <section class="kv-promotion">
-
-        <div class="row align-items-center">
-
-            <div class="col-md-8">
-
-                <h3 class="fw-bold">
-                    ƯU ĐÃI ĐẶC BIỆT
-                </h3>
-
-                <p class="mb-0">
-                    Khám phá những sản phẩm đang được giảm giá
-                    tại <span>King Volleyball</span>.
-                </p>
-
-            </div>
-
-            <div class="col-md-4 text-md-end mt-3 mt-md-0">
-
-                <a href="{% url 'product_list' %}"
-                   class="btn btn-warning fw-bold">
-
-                    Mua ngay
-                    <i class="fas fa-arrow-right"></i>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- FEATURED PRODUCTS -->
-    <section class="kv-section">
-
-        <h2 class="kv-heading">
-            <i class="fas fa-star text-warning"></i>
-            Sản phẩm nổi bật
-        </h2>
-
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
-
-            {% for product in featured_products %}
-
-                <div class="col">
-                    {% include 'product_card.html' with product=product %}
-                </div>
-
-            {% empty %}
-
-                <div class="col-12">
-                    <div class="alert alert-info">
-                        Chưa có sản phẩm nổi bật.
+    <!-- 2. VALUE PROPOSITIONS BAR -->
+    <div class="value-props-bar">
+        <div class="row g-4">
+            <div class="col-6 col-lg-3">
+                <div class="value-prop-item">
+                    <div class="value-prop-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1 text-dark">Giao hàng hỏa tốc</h6>
+                        <small class="text-muted">Miễn phí đơn từ 500k</small>
                     </div>
                 </div>
+            </div>
 
-            {% endfor %}
+            <div class="col-6 col-lg-3">
+                <div class="value-prop-item">
+                    <div class="value-prop-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1 text-dark">100% Chính hãng</h6>
+                        <small class="text-muted">Bảo hành 1 đổi 1</small>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-6 col-lg-3">
+                <div class="value-prop-item">
+                    <div class="value-prop-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1 text-dark">Đổi trả 30 ngày</h6>
+                        <small class="text-muted">Hỗ trợ đổi size tận nơi</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="value-prop-item">
+                    <div class="value-prop-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1 text-dark">Tư vấn kỹ thuật</h6>
+                        <small class="text-muted">Hỗ trợ 24/7 nhiệt tình</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. PRODUCT CATEGORIES (MINIMALIST TILES) -->
+    <section class="py-5 mt-4">
+        <div class="kv-section-header">
+            <div>
+                <h2 class="kv-section-title">Danh Mục Chuyên Sâu</h2>
+                <p class="kv-section-subtitle">Lựa chọn trang thiết bị phù hợp với vị trí thi đấu của bạn</p>
+            </div>
+            <a href="{% url 'product_list' %}" class="btn-kv-outline btn-sm">
+                Xem tất cả danh mục <i class="fas fa-arrow-right ms-1"></i>
+            </a>
         </div>
 
+        <div class="row row-cols-2 row-cols-lg-4 g-4">
+            <div class="col">
+                <a href="{% url 'product_list' %}?type=ball" class="kv-cat-card-4">
+                    <div class="kv-cat-icon-wrap">🏐</div>
+                    <h5 class="kv-cat-title">Bóng Chuyền</h5>
+                    <span class="kv-cat-sub">Thi đấu &amp; Luyện tập</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="{% url 'product_list' %}?type=shoes" class="kv-cat-card-4">
+                    <div class="kv-cat-icon-wrap">👟</div>
+                    <h5 class="kv-cat-title">Giày Thi Đấu</h5>
+                    <span class="kv-cat-sub">Đệm khí trợ lực bật</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="{% url 'product_list' %}?type=clothing" class="kv-cat-card-4">
+                    <div class="kv-cat-icon-wrap">👕</div>
+                    <h5 class="kv-cat-title">Trang Phục</h5>
+                    <span class="kv-cat-sub">Vải thoáng khí Dry-Fit</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="{% url 'product_list' %}?type=accessories" class="kv-cat-card-4">
+                    <div class="kv-cat-icon-wrap">🎒</div>
+                    <h5 class="kv-cat-title">Phụ Kiện Thể Thao</h5>
+                    <span class="kv-cat-sub">Bó gối, balo, còi</span>
+                </a>
+            </div>
+        </div>
     </section>
 
-    <!-- DISCOUNTED PRODUCTS -->
-    <section class="kv-section">
+    <!-- 4. PROMOTIONAL BANNER 4.0 -->
+    <section class="kv-promo-banner-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3">
+                    FLASH SALE 4.0
+                </span>
+                <h2 class="display-6 fw-bold mb-3 text-white">
+                    Ưu đãi giới hạn lên tới 40%
+                </h2>
+                <p class="text-white-50 mb-0" style="max-width: 580px; font-size: 16px;">
+                    Nâng cấp bộ trang bị của bạn ngay hôm nay với mức giá tốt nhất từ các thương hiệu hàng đầu thế giới (Mizuno, Asics, Mikasa, Molten).
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'product_list' %}" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill shadow">
+                    Mua ngay hôm nay <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
 
-        <h2 class="kv-heading">
-            <i class="fas fa-fire text-danger"></i>
-            Ưu đãi dành cho bạn
-        </h2>
+    <!-- 5. FEATURED PRODUCTS (SẢN PHẨM NỔI BẬT) -->
+    <section class="py-4">
+        <div class="kv-section-header">
+            <div>
+                <h2 class="kv-section-title">
+                    <i class="fas fa-star text-warning me-2"></i>Sản Phẩm Nổi Bật
+                </h2>
+                <p class="kv-section-subtitle">Được các vận động viên chuyên nghiệp tin dùng hàng đầu</p>
+            </div>
+            <a href="{% url 'product_list' %}" class="btn-kv-outline btn-sm">
+                Xem thêm <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
 
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+            {% for product in featured_products %}
+                <div class="col">
+                    {% include 'product_card.html' with product=product %}
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="p-5 text-center bg-white rounded-4 border">
+                        <i class="fas fa-volleyball-ball fa-3x text-muted mb-3"></i>
+                        <p class="text-muted mb-0">Chưa có sản phẩm nổi bật nào.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 
+    <!-- 6. DISCOUNTED PRODUCTS (ƯU ĐÃI DÀNH CHO BẠN) -->
+    <section class="py-5">
+        <div class="kv-section-header">
+            <div>
+                <h2 class="kv-section-title">
+                    <i class="fas fa-fire text-danger me-2"></i>Ưu Đãi Đặc Biệt
+                </h2>
+                <p class="kv-section-subtitle">Sản phẩm đang được trợ giá trực tiếp hôm nay</p>
+            </div>
+            <a href="{% url 'product_list' %}" class="btn-kv-outline btn-sm">
+                Tất cả ưu đãi <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for product in discounted_products %}
-
                 <div class="col">
                     {% include 'product_card.html' with product=product %}
                 </div>
-
             {% empty %}
-
                 <div class="col-12">
-                    <p class="text-secondary">
-                        Hiện chưa có sản phẩm khuyến mãi.
-                    </p>
+                    <div class="p-4 text-center bg-white rounded-4 border text-muted">
+                        Hiện chưa có chương trình giảm giá đang hoạt động.
+                    </div>
                 </div>
-
             {% endfor %}
-
         </div>
-
     </section>
 
-    <!-- LATEST PRODUCTS -->
-    <section class="kv-section">
-
-        <h2 class="kv-heading">
-            <i class="fas fa-clock text-warning"></i>
-            Sản phẩm mới cập nhật
-        </h2>
+    <!-- 7. LATEST PRODUCTS (MỚI CẬP NHẬT) -->
+    <section class="py-4 mb-5">
+        <div class="kv-section-header">
+            <div>
+                <h2 class="kv-section-title">
+                    <i class="fas fa-sparkles text-primary me-2"></i>Hàng Mới Về
+                </h2>
+                <p class="kv-section-subtitle">Các phiên bản và mẫu mã mới nhất vừa cập bến kho King Volleyball</p>
+            </div>
+            <a href="{% url 'product_list' %}" class="btn-kv-outline btn-sm">
+                Xem tất cả <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
 
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
-
             {% for product in latest_products %}
-
                 <div class="col">
                     {% include 'product_card.html' with product=product %}
                 </div>
-
             {% empty %}
-
                 <div class="col-12">
-                    <p class="text-secondary">
-                        Chưa có sản phẩm mới.
-                    </p>
+                    <div class="p-4 text-center bg-white rounded-4 border text-muted">
+                        Chưa có sản phẩm mới nào được cập nhật.
+                    </div>
                 </div>
-
             {% endfor %}
-
         </div>
-
     </section>
 
 </div>

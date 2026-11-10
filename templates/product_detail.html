@@ -1,94 +1,242 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}{{ product.name }} | King Volleyball{% endblock %}
+{% block title %}{{ product.name }} | King Volleyball 4.0{% endblock %}
 
 {% block content %}
+
 <div class="container py-5">
+
+    <!-- BREADCRUMB -->
     <nav aria-label="breadcrumb" class="mb-4">
-        <a href="{% url 'home' %}">Trang chủ</a>
-        /
-        <a href="{% url 'product_list' %}">Sản phẩm</a>
-        /
-        {{ product.name }}
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-secondary text-decoration-none">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}" class="text-secondary text-decoration-none">Sản phẩm</a></li>
+            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">{{ product.name }}</li>
+        </ol>
     </nav>
 
-    <div class="row g-5">
-        <div class="col-md-6">
-            {% if product.image %}
-                <img src="{{ product.image.url }}"
-                     alt="{{ product.name }}"
-                     class="img-fluid rounded shadow-sm w-100"
-                     style="max-height: 480px; object-fit: contain;">
-            {% else %}
-                <div class="bg-light rounded p-5 text-center fs-1">
-                    🏐
-                </div>
-            {% endif %}
-        </div>
+    <!-- PRODUCT MAIN SHOWCASE -->
+    <div class="row g-5 align-items-start mb-5">
 
-        <div class="col-md-6">
-            <h1 class="fw-bold">{{ product.name }}</h1>
+        <!-- LEFT: PRODUCT IMAGE GALLERY -->
+        <div class="col-lg-6">
+            <div class="kv-detail-image-box">
+                {% if product.discount_percent > 0 %}
+                    <span class="kv-detail-badge-discount">
+                        GIẢM {{ product.discount_percent }}%
+                    </span>
+                {% endif %}
 
-            <p class="text-warning">
-                ★ {{ product.rating|floatformat:1 }}/5
-                <span class="text-muted">
-                    | Đã bán: {{ product.sold_count }}
-                </span>
-            </p>
+                {% if product.image %}
+                    <img src="{{ product.image.url }}"
+                         alt="{{ product.name }}"
+                         class="kv-detail-img"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="kv-detail-placeholder" style="display: none;">
+                        🏐
+                    </div>
+                {% else %}
+                    <div class="kv-detail-placeholder">
+                        🏐
+                    </div>
+                {% endif %}
+            </div>
 
-            {% if product.discount_percent > 0 %}
-                <span class="badge bg-danger mb-3">
-                    Giảm {{ product.discount_percent }}%
-                </span>
-                <p class="text-muted text-decoration-line-through mb-1">
-                    {{ product.price|floatformat:0 }} ₫
-                </p>
-            {% endif %}
-
-            <h2 class="text-danger fw-bold mb-4">
-                {{ product.final_price|floatformat:0 }} ₫
-            </h2>
-
-            <h5>Mô tả sản phẩm</h5>
-            <p style="white-space: pre-line;">{{ product.description }}</p>
-
-            <a href="{% url 'add_to_cart' product.id %}"
-               class="btn btn-warning btn-lg">
-                <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
-            </a>
-
-            <a href="{% url 'product_list' %}"
-               class="btn btn-outline-dark btn-lg ms-2">
-                Quay lại
-            </a>
-
-            {% if user.is_staff %}
-                <div class="mt-4 pt-3 border-top">
-                    <span class="badge bg-warning text-dark mb-2">Thao tác Quản trị</span>
-                    <div class="d-flex gap-2">
-                        <a href="{% url 'edit_product' product.id %}" class="btn btn-outline-primary">
-                            <i class="fas fa-edit me-1"></i> Chỉnh sửa thông tin
-                        </a>
-                        <a href="{% url 'delete_product' product.id %}" class="btn btn-outline-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">
-                            <i class="fas fa-trash me-1"></i> Xóa sản phẩm
-                        </a>
+            <!-- TRUST BADGES -->
+            <div class="row g-3 mt-2">
+                <div class="col-4">
+                    <div class="p-3 text-center bg-white rounded-3 border">
+                        <i class="fas fa-shield-alt text-success fs-5 mb-1"></i>
+                        <div class="small fw-bold text-dark">Chính Hãng</div>
+                        <small class="text-muted" style="font-size: 11px;">100% Cam kết</small>
                     </div>
                 </div>
-            {% endif %}
+                <div class="col-4">
+                    <div class="p-3 text-center bg-white rounded-3 border">
+                        <i class="fas fa-truck-moving text-primary fs-5 mb-1"></i>
+                        <div class="small fw-bold text-dark">Giao Hỏa Tốc</div>
+                        <small class="text-muted" style="font-size: 11px;">Toàn quốc 2-3 ngày</small>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="p-3 text-center bg-white rounded-3 border">
+                        <i class="fas fa-exchange-alt text-warning fs-5 mb-1"></i>
+                        <div class="small fw-bold text-dark">Đổi Trả 30D</div>
+                        <small class="text-muted" style="font-size: 11px;">Hỗ trợ đổi size</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: PRODUCT SPECIFICATIONS & ACTIONS -->
+        <div class="col-lg-6">
+            <div class="ps-lg-3">
+
+                <!-- CATEGORY / TYPE -->
+                <span class="badge bg-dark-subtle text-dark px-3 py-2 rounded-pill fw-bold text-uppercase mb-3" style="font-size: 11px; letter-spacing: 0.05em;">
+                    {% if product.product_type == 'ball' %}Bóng chuyền thi đấu
+                    {% elif product.product_type == 'shoes' %}Giày bóng chuyền chuyên nghiệp
+                    {% elif product.product_type == 'clothing' %}Trang phục thể thao
+                    {% elif product.product_type == 'accessories' %}Phụ kiện bảo hộ
+                    {% else %}Thể thao chính hãng{% endif %}
+                </span>
+
+                <h1 class="fw-bold text-dark mb-3" style="font-size: clamp(24px, 3.5vw, 36px); letter-spacing: -0.03em; line-height: 1.25;">
+                    {{ product.name }}
+                </h1>
+
+                <!-- RATINGS & SALES -->
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-4 pb-3 border-bottom">
+                    <div class="d-flex align-items-center gap-1 text-warning">
+                        <i class="fas fa-star"></i>
+                        <span class="fw-bold text-dark">{{ product.rating|default:5.0|floatformat:1 }}</span>
+                        <span class="text-muted small">/ 5.0</span>
+                    </div>
+                    <span class="text-muted">•</span>
+                    <div class="text-muted small">
+                        <i class="fas fa-fire text-danger me-1"></i> Đã bán: <strong class="text-dark">{{ product.sold_count }}</strong>
+                    </div>
+                    <span class="text-muted">•</span>
+                    <a href="{% url 'rate_product' product.id %}" class="small text-decoration-none text-primary fw-semibold">
+                        <i class="fas fa-pen me-1"></i> Viết đánh giá
+                    </a>
+                </div>
+
+                <!-- PRICE BOX -->
+                <div class="p-4 bg-light rounded-4 mb-4 border">
+                    <div class="d-flex align-items-baseline gap-3">
+                        <h2 class="fw-bold text-dark mb-0" style="font-size: 34px; letter-spacing: -0.03em;">
+                            {{ product.final_price|vnd }} ₫
+                        </h2>
+                        {% if product.discount_percent > 0 %}
+                            <span class="text-muted text-decoration-line-through fs-5">
+                                {{ product.price|vnd }} ₫
+                            </span>
+                            <span class="badge bg-danger rounded-pill px-3 py-1 fw-bold">
+                                Tiết kiệm {{ product.discount_percent }}%
+                            </span>
+                        {% endif %}
+                    </div>
+                    <small class="text-success mt-1 d-block fw-semibold">
+                        <i class="fas fa-check-circle me-1"></i> Còn hàng trong kho - Sẵn sàng vận chuyển
+                    </small>
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="mb-4">
+                    <h5 class="fw-bold text-dark mb-2">Thông tin chi tiết sản phẩm</h5>
+                    <p class="text-secondary" style="line-height: 1.8; white-space: pre-line;">
+                        {{ product.description|default:"Sản phẩm bóng chuyền chính hãng cao cấp, thiết kế công thái học mang lại độ bám tối đa và trải nghiệm vận động đỉnh cao." }}
+                    </p>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-dark btn-lg px-4 py-3 rounded-pill fw-bold flex-grow-1 shadow-sm d-flex align-items-center justify-content-center gap-2" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Thêm vào giỏ hàng</span>
+                    </a>
+
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-dark btn-lg px-4 py-3 rounded-pill fw-semibold">
+                        Tiếp tục xem
+                    </a>
+                </div>
+
+                <!-- ADMIN QUICK ACTIONS -->
+                {% if user.is_staff %}
+                    <div class="p-3 bg-white rounded-3 border border-warning-subtle mb-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="badge bg-warning text-dark fw-bold">
+                                <i class="fas fa-shield-alt me-1"></i> Quản trị viên
+                            </span>
+                            <small class="text-muted">ID Sản phẩm: #{{ product.id }}</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-outline-primary flex-grow-1 rounded-pill">
+                                <i class="fas fa-edit me-1"></i> Chỉnh sửa thông tin
+                            </a>
+                            <a href="{% url 'delete_product' product.id %}" class="btn btn-sm btn-outline-danger rounded-pill" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">
+                                <i class="fas fa-trash me-1"></i> Xóa
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
         </div>
     </div>
 
+    <!-- RELATED PRODUCTS -->
     {% if related_products %}
-        <hr class="my-5">
-        <h3 class="fw-bold mb-4">Sản phẩm tương tự</h3>
-
-        <div class="row row-cols-2 row-cols-md-4 g-3">
-            {% for item in related_products %}
-                <div class="col">
-                    {% include 'product_card.html' with product=item %}
+        <div class="pt-5 mt-4 border-top">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                    <h3 class="fw-bold text-dark mb-1" style="font-size: 24px;">Sản phẩm tương tự</h3>
+                    <p class="text-secondary small mb-0">Các sản phẩm cùng phân loại bạn có thể quan tâm</p>
                 </div>
-            {% endfor %}
+                <a href="{% url 'product_list' %}" class="btn btn-sm btn-outline-dark rounded-pill px-3">
+                    Xem tất cả <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="row row-cols-2 row-cols-md-4 g-4">
+                {% for item in related_products %}
+                    <div class="col">
+                        {% include 'product_card.html' with product=item %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     {% endif %}
+
 </div>
+
+<style>
+    .kv-detail-image-box {
+        position: relative;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05);
+    }
+
+    .kv-detail-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 30px;
+        transition: transform 0.4s ease;
+    }
+
+    .kv-detail-image-box:hover .kv-detail-img {
+        transform: scale(1.05);
+    }
+
+    .kv-detail-placeholder {
+        font-size: 90px;
+        color: #cbd5e1;
+    }
+
+    .kv-detail-badge-discount {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: #ef4444;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 800;
+        padding: 6px 16px;
+        border-radius: 999px;
+        z-index: 2;
+        letter-spacing: 0.04em;
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    }
+</style>
+
 {% endblock %}

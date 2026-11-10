@@ -488,21 +488,20 @@ def checkout(request):
 
 @login_required
 def rate_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
     if request.method == 'POST':
         form = RatingForm(request.POST)
         if form.is_valid():
-            product = get_object_or_404(Product, id=product_id)
-
             rating = form.cleaned_data['rating']
             product.rating = rating  # gán số sao cho sản phẩm
             product.save()
 
             messages.success(request, "Cảm ơn bạn đã đánh giá sản phẩm!")
-            return redirect('home')
+            return redirect('product_detail', product_id=product.id)
     else:
         form = RatingForm()
 
-    return render(request, 'rate_product.html', {'form': form})
+    return render(request, 'rate_product.html', {'form': form, 'product': product})
 
 # -----------------------
 # Admin Dashboard & Management

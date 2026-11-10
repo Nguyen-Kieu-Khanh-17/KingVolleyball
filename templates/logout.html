@@ -1,12 +1,28 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Xác nhận đăng xuất | King Volleyball 4.0{% endblock %}
 
 {% block content %}
-<div class="container mt-5 text-center">
-    <h2>Bạn có chắc chắn muốn đăng xuất không?</h2>
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Đăng xuất</button>
-        <a href="{% url 'home' %}" class="btn btn-secondary">Hủy</a>
-    </form>
+<div class="container py-5 text-center" style="max-width: 500px;">
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white my-4">
+        <div class="rounded-circle bg-light d-inline-flex p-3 mb-3 text-secondary" style="font-size: 36px; width: 72px; height: 72px; align-items: center; justify-content: center; margin: 0 auto;">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <h3 class="fw-bold text-dark mb-2">Đăng xuất tài khoản</h3>
+        <p class="text-secondary small mb-4">Bạn có chắc chắn muốn kết thúc phiên đăng nhập hiện tại không?</p>
+        
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-danger btn-lg rounded-pill fw-bold">
+                    <i class="fas fa-sign-out-alt me-1"></i> Xác nhận Đăng xuất
+                </button>
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary rounded-pill py-2">
+                    Hủy bỏ
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

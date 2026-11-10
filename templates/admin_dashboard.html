@@ -1,48 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Bảng Điều Khiển Quản Trị | King Volleyball{% endblock %}
+{% block title %}Bảng Điều Khiển Quản Trị 4.0 | King Volleyball{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-lg-5 py-4">
 
-    <!-- DASHBOARD HEADER -->
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3 bg-white p-4 rounded-4 shadow-sm">
+    <!-- DASHBOARD HEADER 4.0 -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3 bg-white p-4 rounded-4 shadow-sm border">
         <div>
             <div class="d-flex align-items-center gap-2">
-                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold">
-                    <i class="fas fa-crown me-1"></i> Admin Portal
+                <span class="badge bg-dark text-white px-3 py-1 rounded-pill fw-bold" style="font-size: 11px;">
+                    <i class="fas fa-crown text-warning me-1"></i> Admin Portal 4.0
                 </span>
-                <span class="text-muted small">• Cập nhật theo thời gian thực</span>
+                <span class="text-success small fw-semibold">
+                    <i class="fas fa-circle fa-xs me-1"></i> Trực tuyến
+                </span>
             </div>
-            <h2 class="fw-bold text-dark mt-2 mb-0">Trung Tâm Điều Hành Quản Trị</h2>
-            <p class="text-muted mb-0 small">Quản lý sản phẩm, đơn hàng, khách hàng và giám sát doanh thu cửa hàng King Volleyball.</p>
+            <h2 class="fw-bold text-dark mt-2 mb-1" style="font-size: 26px; letter-spacing: -0.03em;">Trung Tâm Quản Trị Hệ Thống</h2>
+            <p class="text-secondary mb-0 small">Giám sát doanh thu, quản lý danh mục sản phẩm và vận hành đơn hàng King Volleyball.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
-            <a href="{% url 'add_product' %}" class="btn btn-warning fw-bold px-3 py-2 shadow-sm">
-                <i class="fas fa-plus-circle me-1"></i> Thêm sản phẩm mới
+            <a href="{% url 'add_product' %}" class="btn btn-dark fw-bold px-4 py-2 rounded-pill shadow-sm" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                <i class="fas fa-plus-circle me-1"></i> Thêm sản phẩm
             </a>
-            <a href="/admin/" target="_blank" class="btn btn-dark fw-bold px-3 py-2">
+            <a href="/admin/" target="_blank" class="btn btn-outline-dark fw-semibold px-3 py-2 rounded-pill">
                 <i class="fas fa-database me-1"></i> Django Admin
             </a>
-            <a href="{% url 'home' %}" class="btn btn-outline-secondary px-3 py-2">
-                <i class="fas fa-store me-1"></i> Xem cửa hàng
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary px-3 py-2 rounded-pill">
+                <i class="fas fa-store me-1"></i> Cửa hàng
             </a>
         </div>
     </div>
 
-    <!-- TOP KPI STATS -->
+    <!-- TOP KPI STATS 4.0 -->
     <div class="row g-3 mb-4">
         <div class="col-sm-6 col-xl-3">
             <div class="card border-0 shadow-sm rounded-4 h-100 p-4 bg-white border-start border-4 border-danger">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="text-muted small fw-bold text-uppercase">Tổng doanh thu</span>
-                        <h3 class="fw-bold text-danger mb-0 mt-2">{{ total_revenue|floatformat:0 }} ₫</h3>
+                        <span class="text-muted small fw-bold text-uppercase" style="font-size: 11px; letter-spacing: 0.05em;">Tổng doanh thu</span>
+                        <h3 class="fw-bold text-danger mb-0 mt-2" style="letter-spacing: -0.02em;">{{ total_revenue|vnd }} ₫</h3>
                         <small class="text-success fw-semibold"><i class="fas fa-arrow-up me-1"></i>Từ {{ total_orders }} đơn hàng</small>
                     </div>
-                    <div class="rounded-circle p-3 text-danger bg-danger-subtle d-flex align-items-center justify-content-center" style="width: 58px; height: 58px;">
-                        <i class="fas fa-money-bill-wave fa-xl"></i>
+                    <div class="rounded-circle p-3 text-danger bg-danger-subtle d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                        <i class="fas fa-money-bill-wave fa-lg"></i>
                     </div>
                 </div>
             </div>
@@ -52,12 +54,12 @@
             <div class="card border-0 shadow-sm rounded-4 h-100 p-4 bg-white border-start border-4 border-primary">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="text-muted small fw-bold text-uppercase">Đơn hàng hoàn tất</span>
-                        <h3 class="fw-bold text-primary mb-0 mt-2">{{ total_orders }}</h3>
+                        <span class="text-muted small fw-bold text-uppercase" style="font-size: 11px; letter-spacing: 0.05em;">Đơn hàng hoàn tất</span>
+                        <h3 class="fw-bold text-primary mb-0 mt-2" style="letter-spacing: -0.02em;">{{ total_orders }}</h3>
                         <small class="text-muted"><i class="fas fa-box-open me-1"></i>{{ total_sold_items }} sản phẩm đã bán</small>
                     </div>
-                    <div class="rounded-circle p-3 text-primary bg-primary-subtle d-flex align-items-center justify-content-center" style="width: 58px; height: 58px;">
-                        <i class="fas fa-shopping-cart fa-xl"></i>
+                    <div class="rounded-circle p-3 text-primary bg-primary-subtle d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
                     </div>
                 </div>
             </div>
@@ -67,12 +69,12 @@
             <div class="card border-0 shadow-sm rounded-4 h-100 p-4 bg-white border-start border-4 border-success">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="text-muted small fw-bold text-uppercase">Sản phẩm đang bán</span>
-                        <h3 class="fw-bold text-success mb-0 mt-2">{{ total_products }}</h3>
-                        <small class="text-muted"><i class="fas fa-tags me-1"></i>Đa dạng danh mục</small>
+                        <span class="text-muted small fw-bold text-uppercase" style="font-size: 11px; letter-spacing: 0.05em;">Sản phẩm đang bán</span>
+                        <h3 class="fw-bold text-success mb-0 mt-2" style="letter-spacing: -0.02em;">{{ total_products }}</h3>
+                        <small class="text-muted"><i class="fas fa-tags me-1"></i>Đa dạng 4 danh mục</small>
                     </div>
-                    <div class="rounded-circle p-3 text-success bg-success-subtle d-flex align-items-center justify-content-center" style="width: 58px; height: 58px;">
-                        <i class="fas fa-volleyball-ball fa-xl"></i>
+                    <div class="rounded-circle p-3 text-success bg-success-subtle d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                        <i class="fas fa-volleyball-ball fa-lg"></i>
                     </div>
                 </div>
             </div>
@@ -82,12 +84,12 @@
             <div class="card border-0 shadow-sm rounded-4 h-100 p-4 bg-white border-start border-4 border-warning">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="text-muted small fw-bold text-uppercase">Khách hàng / User</span>
-                        <h3 class="fw-bold text-dark mb-0 mt-2">{{ total_users }}</h3>
-                        <small class="text-muted"><i class="fas fa-shield-alt me-1"></i>Hệ thống bảo mật</small>
+                        <span class="text-muted small fw-bold text-uppercase" style="font-size: 11px; letter-spacing: 0.05em;">Tài khoản người dùng</span>
+                        <h3 class="fw-bold text-dark mb-0 mt-2" style="letter-spacing: -0.02em;">{{ total_users }}</h3>
+                        <small class="text-muted"><i class="fas fa-shield-alt text-warning me-1"></i>Hệ thống bảo mật</small>
                     </div>
-                    <div class="rounded-circle p-3 text-warning bg-warning-subtle d-flex align-items-center justify-content-center" style="width: 58px; height: 58px;">
-                        <i class="fas fa-users-cog fa-xl"></i>
+                    <div class="rounded-circle p-3 text-warning bg-warning-subtle d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                        <i class="fas fa-users-cog fa-lg"></i>
                     </div>
                 </div>
             </div>
@@ -143,11 +145,11 @@
                             </select>
                         </div>
                         <div class="col-md-3 d-flex gap-2">
-                            <button type="submit" class="btn btn-dark fw-bold px-3 flex-fill">
+                            <button type="submit" class="btn btn-dark fw-bold px-3 flex-fill rounded-pill">
                                 <i class="fas fa-filter me-1"></i> Lọc
                             </button>
-                            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">Đặt lại</a>
-                            <a href="{% url 'add_product' %}" class="btn btn-warning fw-bold text-nowrap">
+                            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary rounded-pill">Đặt lại</a>
+                            <a href="{% url 'add_product' %}" class="btn btn-warning fw-bold text-nowrap rounded-pill">
                                 <i class="fas fa-plus"></i> Thêm mới
                             </a>
                         </div>
@@ -175,9 +177,9 @@
                                 <tr>
                                     <td>
                                         {% if product.image %}
-                                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="rounded shadow-sm" style="width: 50px; height: 50px; object-fit: cover;">
+                                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="rounded shadow-sm" style="width: 48px; height: 48px; object-fit: contain; background: #f8fafc;">
                                         {% else %}
-                                            <div class="rounded bg-light text-center d-flex align-items-center justify-content-center text-muted" style="width: 50px; height: 50px; font-size: 20px;">
+                                            <div class="rounded bg-light text-center d-flex align-items-center justify-content-center text-muted" style="width: 48px; height: 48px; font-size: 20px;">
                                                 🏐
                                             </div>
                                         {% endif %}
@@ -188,21 +190,21 @@
                                         </a>
                                         <div class="small text-muted text-truncate" style="max-width: 260px;">{{ product.description }}</div>
                                     </td>
-                                    <td><span class="badge bg-secondary-subtle text-secondary border px-2 py-1">{{ product.get_product_type_display }}</span></td>
-                                    <td class="text-muted">{{ product.price|floatformat:0 }} ₫</td>
+                                    <td><span class="badge bg-secondary-subtle text-secondary border px-2 py-1 rounded-pill">{{ product.get_product_type_display }}</span></td>
+                                    <td class="text-muted">{{ product.price|vnd }} ₫</td>
                                     <td>
                                         {% if product.discount_percent > 0 %}
-                                            <span class="badge bg-danger">-{{ product.discount_percent }}%</span>
+                                            <span class="badge bg-danger rounded-pill">-{{ product.discount_percent }}%</span>
                                         {% else %}
                                             <span class="text-muted small">0%</span>
                                         {% endif %}
                                     </td>
-                                    <td class="fw-bold text-danger">{{ product.final_price|floatformat:0 }} ₫</td>
+                                    <td class="fw-bold text-danger">{{ product.final_price|vnd }} ₫</td>
                                     <td><span class="badge bg-light text-dark border">{{ product.sold_count }}</span></td>
                                     <td><span class="text-warning">★ {{ product.rating|floatformat:1 }}</span></td>
                                     <td>
                                         {% if product.is_featured %}
-                                            <span class="badge bg-success-subtle text-success border border-success-subtle"><i class="fas fa-check me-1"></i>Có</span>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill"><i class="fas fa-check me-1"></i>Có</span>
                                         {% else %}
                                             <span class="text-muted small">Không</span>
                                         {% endif %}
@@ -212,7 +214,7 @@
                                             <a href="{% url 'edit_product' product.id %}" class="btn btn-outline-primary" title="Chỉnh sửa thông tin">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="{% url 'delete_product' product.id %}" class="btn btn-outline-danger" title="Xóa sản phẩm" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm: {{ product.name }}?');">
+                                            <a href="{% url 'delete_product' product.id %}" class="btn btn-outline-danger" title="Xóa sản phẩm" onclick="return confirm('Bạn có chắc muốn xóa: {{ product.name }}?');">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </div>
@@ -249,12 +251,12 @@
                             <tbody>
                                 {% for order in orders %}
                                 <tr>
-                                    <td class="fw-bold text-primary">#{{ order.id }}</td>
+                                    <td class="fw-bold text-dark">#{{ order.id }}</td>
                                     <td>
                                         <div class="fw-semibold text-dark">{{ order.user.username }}</div>
                                         <small class="text-muted">{{ order.user.email|default:"Không có email" }}</small>
                                     </td>
-                                    <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                                    <td class="small text-muted">{{ order.created_at|date:"d/m/Y H:i" }}</td>
                                     <td>
                                         <ul class="list-unstyled mb-0 small">
                                             {% for item in order.items.all %}
@@ -262,12 +264,12 @@
                                                     <i class="fas fa-cube text-muted me-1"></i>
                                                     <strong>{{ item.product.name|default:"Sản phẩm đã gỡ" }}</strong>
                                                     <span class="badge bg-light text-dark border">x {{ item.quantity }}</span>
-                                                    <span class="text-muted">({{ item.price|floatformat:0 }} ₫)</span>
+                                                    <span class="text-muted">({{ item.price|vnd }} ₫)</span>
                                                 </li>
                                             {% endfor %}
                                         </ul>
                                     </td>
-                                    <td class="fw-bold text-danger fs-6">{{ order.total_amount|floatformat:0 }} ₫</td>
+                                    <td class="fw-bold text-danger fs-6">{{ order.total_amount|vnd }} ₫</td>
                                     <td>
                                         <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">
                                             <i class="fas fa-check-circle me-1"></i> Đã thanh toán
@@ -296,8 +298,8 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="fw-bold mb-0 text-muted">Danh sách thành viên & Quản trị viên</h6>
                         {% if request.user.is_superuser %}
-                        <button type="button" class="btn btn-sm btn-warning fw-bold px-3" data-bs-toggle="modal" data-bs-target="#createAdminModal">
-                            <i class="fas fa-user-plus me-1"></i> Thêm tài khoản Quản trị mới
+                        <button type="button" class="btn btn-sm btn-warning fw-bold px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#createAdminModal">
+                            <i class="fas fa-user-plus me-1"></i> Thêm Quản trị viên mới
                         </button>
                         {% endif %}
                     </div>
@@ -319,35 +321,35 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center gap-2">
-                                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white fw-bold" style="width: 36px; height: 36px;">
+                                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-dark text-white fw-bold" style="width: 36px; height: 36px;">
                                                 {{ u.username|first|upper }}
                                             </div>
                                             <span class="fw-bold text-dark">{{ u.username }}</span>
                                         </div>
                                     </td>
                                     <td>{{ u.get_full_name|default:"—" }}</td>
-                                    <td>{{ u.email|default:"Chưa cập nhật" }}</td>
-                                    <td>{{ u.date_joined|date:"d/m/Y" }}</td>
-                                    <td>{{ u.last_login|date:"d/m/Y H:i"|default:"Chưa đăng nhập" }}</td>
+                                    <td class="small text-muted">{{ u.email|default:"Chưa cập nhật" }}</td>
+                                    <td class="small text-muted">{{ u.date_joined|date:"d/m/Y" }}</td>
+                                    <td class="small text-muted">{{ u.last_login|date:"d/m/Y H:i"|default:"Chưa đăng nhập" }}</td>
                                     <td>
                                         {% if u.is_superuser %}
-                                            <span class="badge bg-danger rounded-pill px-3 py-2"><i class="fas fa-crown me-1"></i> Super Admin</span>
+                                            <span class="badge bg-danger rounded-pill px-3 py-1"><i class="fas fa-crown me-1"></i> Super Admin</span>
                                         {% elif u.is_staff %}
-                                            <span class="badge bg-warning text-dark rounded-pill px-3 py-2"><i class="fas fa-user-shield me-1"></i> Quản trị viên (Staff)</span>
+                                            <span class="badge bg-warning text-dark rounded-pill px-3 py-1 fw-bold"><i class="fas fa-shield-alt me-1"></i> Quản trị viên</span>
                                         {% else %}
-                                            <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><i class="fas fa-user me-1"></i> Khách hàng</span>
+                                            <span class="badge bg-light text-dark border rounded-pill px-3 py-1"><i class="fas fa-user me-1"></i> Khách hàng</span>
                                         {% endif %}
                                     </td>
                                     <td class="text-center">
                                         {% if request.user.is_superuser %}
                                             {% if u != request.user and not u.is_superuser %}
                                                 {% if u.is_staff %}
-                                                    <a href="{% url 'toggle_user_staff' u.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Hủy quyền Quản trị viên của {{ u.username }}?');">
+                                                    <a href="{% url 'toggle_user_staff' u.id %}" class="btn btn-sm btn-outline-danger rounded-pill" onclick="return confirm('Hủy quyền Quản trị viên của {{ u.username }}?');">
                                                         <i class="fas fa-user-minus me-1"></i> Thu hồi Staff
                                                     </a>
                                                 {% else %}
-                                                    <a href="{% url 'toggle_user_staff' u.id %}" class="btn btn-sm btn-outline-success" onclick="return confirm('Cấp quyền Quản trị viên cho {{ u.username }}?');">
-                                                        <i class="fas fa-user-plus me-1"></i> Cấp quyền Staff
+                                                    <a href="{% url 'toggle_user_staff' u.id %}" class="btn btn-sm btn-outline-success rounded-pill" onclick="return confirm('Cấp quyền Quản trị viên cho {{ u.username }}?');">
+                                                        <i class="fas fa-user-plus me-1"></i> Cấp Staff
                                                     </a>
                                                 {% endif %}
                                             {% else %}
@@ -369,19 +371,19 @@
                     <div class="row g-4">
                         {% for product in top_products %}
                         <div class="col-md-6 col-lg-4">
-                            <div class="card border rounded-4 p-3 h-100 shadow-sm">
+                            <div class="card border rounded-4 p-3 h-100 shadow-sm bg-white">
                                 <div class="d-flex gap-3 align-items-center">
                                     {% if product.image %}
-                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="rounded" style="width: 70px; height: 70px; object-fit: cover;">
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="rounded" style="width: 70px; height: 70px; object-fit: contain; background: #f8fafc;">
                                     {% else %}
                                         <div class="rounded bg-light d-flex align-items-center justify-content-center text-muted" style="width: 70px; height: 70px; font-size: 28px;">🏐</div>
                                     {% endif %}
                                     <div class="flex-grow-1">
-                                        <span class="badge bg-danger-subtle text-danger mb-1">Top #{{ forloop.counter }} Bán chạy</span>
+                                        <span class="badge bg-danger-subtle text-danger mb-1 rounded-pill">Top #{{ forloop.counter }} Bán chạy</span>
                                         <h6 class="fw-bold text-dark mb-1">{{ product.name }}</h6>
-                                        <div class="text-danger fw-bold">{{ product.final_price|floatformat:0 }} ₫</div>
+                                        <div class="text-danger fw-bold">{{ product.final_price|vnd }} ₫</div>
                                         <div class="small text-muted mt-1">
-                                            <i class="fas fa-chart-line text-success me-1"></i>Đã bán: <strong>{{ product.sold_count }}</strong> chiếc
+                                            <i class="fas fa-chart-line text-success me-1"></i>Đã bán: <strong>{{ product.sold_count }}</strong>
                                             <span class="mx-1">•</span>
                                             <span class="text-warning">★ {{ product.rating|floatformat:1 }}</span>
                                         </div>
@@ -395,6 +397,7 @@
 
             </div>
         </div>
+    </div>
 </div>
 
 <!-- MODAL TẠO TÀI KHOẢN ADMIN MỚI -->
@@ -403,7 +406,7 @@
         <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
             <div class="modal-header bg-dark text-white p-4">
                 <h5 class="modal-title fw-bold" id="createAdminModalLabel">
-                    <i class="fas fa-user-shield text-warning me-2"></i>Thêm Tài Khoản Quản Trị Mới
+                    <i class="fas fa-user-shield text-warning me-2"></i>Thêm Quản Trị Viên Mới
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -430,8 +433,8 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-light p-3">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-warning fw-bold px-4">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-warning fw-bold px-4 rounded-pill">
                         <i class="fas fa-check me-1"></i> Tạo tài khoản
                     </button>
                 </div>

@@ -1,11 +1,104 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Đánh giá: {{ product.name }} | King Volleyball 4.0{% endblock %}
 
 {% block content %}
-<h2>Đánh giá sản phẩm: {{ product.name }}</h2>
+<div class="container py-5" style="max-width: 680px;">
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Gửi đánh giá</button>
-</form>
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-secondary text-decoration-none">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_detail' product.id %}" class="text-secondary text-decoration-none">{{ product.name }}</a></li>
+            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Đánh giá sản phẩm</li>
+        </ol>
+    </nav>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+        <div class="card-header bg-dark text-white p-4">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; font-size: 20px;">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div>
+                    <h4 class="fw-bold mb-1">Đánh giá sản phẩm</h4>
+                    <p class="text-white-50 mb-0 small">Chia sẻ trải nghiệm sử dụng thực tế của bạn về sản phẩm này</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+
+            <!-- PRODUCT MINI SUMMARY -->
+            <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 mb-4">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="rounded" style="width: 60px; height: 60px; object-fit: contain; background: #fff;">
+                {% else %}
+                    <div class="rounded bg-white d-flex align-items-center justify-content-center fs-3" style="width: 60px; height: 60px;">🏐</div>
+                {% endif %}
+                <div>
+                    <h6 class="fw-bold mb-1 text-dark">{{ product.name }}</h6>
+                    <div class="text-danger fw-bold small">{{ product.final_price|vnd }} ₫</div>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Đã có lỗi!</strong> Vui lòng kiểm tra lại thông tin bên dưới.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+
+                <div class="mb-4">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="d-flex gap-2 pt-3 border-top">
+                    <button type="submit" class="btn btn-dark btn-lg px-4 rounded-pill fw-bold flex-grow-1" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                        <i class="fas fa-paper-plane me-1"></i> Gửi đánh giá
+                    </button>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
+                        Hủy
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    form p {
+        margin-bottom: 1.25rem;
+    }
+    form label {
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    form input[type="text"],
+    form input[type="number"],
+    form textarea,
+    form select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        border: 1px solid #cbd5e1;
+        background-color: #f8fafc;
+        font-family: inherit;
+        font-size: 14px;
+        transition: all 0.2s ease;
+    }
+    form input:focus,
+    form textarea:focus,
+    form select:focus {
+        outline: none;
+        background-color: #ffffff;
+        border-color: #0f172a;
+        box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+    }
+</style>
 {% endblock %}

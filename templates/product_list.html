@@ -1,93 +1,106 @@
-
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Sản phẩm | King Volleyball{% endblock %}
+{% block title %}Tất cả sản phẩm | King Volleyball 4.0{% endblock %}
 
 {% block content %}
 
 <div class="container py-5">
 
-    <!-- PAGE TITLE -->
-    <div class="mb-4">
-        <h1 class="kv-heading">
-            Tất cả sản phẩm
-        </h1>
-
-        <p class="text-secondary">
-            Khám phá các sản phẩm bóng chuyền chất lượng tại King Volleyball.
-        </p>
+    <!-- PAGE HEADER -->
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-3 border-bottom pb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2 small">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-secondary text-decoration-none">Trang chủ</a></li>
+                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Sản phẩm</li>
+                </ol>
+            </nav>
+            <h1 class="fw-bold text-dark mb-1" style="font-size: 32px; letter-spacing: -0.03em;">Bộ Sưu Tập Bóng Chuyền</h1>
+            <p class="text-secondary mb-0 small">Tuyển chọn các thiết bị thể thao chất lượng cao, bền bỉ và chuẩn thi đấu quốc tế.</p>
+        </div>
+        <div>
+            <span class="badge bg-white text-dark border px-3 py-2 rounded-pill shadow-sm">
+                <i class="fas fa-boxes me-1 text-warning"></i> <strong>{{ products|length }}</strong> sản phẩm
+            </span>
+        </div>
     </div>
 
-    <!-- CATEGORY FILTER -->
-    <div class="d-flex flex-wrap gap-2 mb-4">
+    <!-- MODERN CATEGORY FILTER PILLS -->
+    <div class="d-flex flex-wrap gap-2 mb-5 align-items-center">
+        <span class="text-muted small fw-bold me-2 text-uppercase">Danh mục:</span>
 
         <a href="{% url 'product_list' %}"
-           class="btn {% if not selected_type %}btn-warning{% else %}btn-outline-dark{% endif %}">
-            <i class="fas fa-th-large"></i>
-            Tất cả
+           class="kv-filter-pill {% if not selected_type %}active{% endif %}">
+            <i class="fas fa-th-large me-1"></i> Tất cả
         </a>
 
         {% for value, label in product_types %}
-
             <a href="{% url 'product_list' %}?type={{ value }}"
-               class="btn {% if selected_type == value %}btn-warning{% else %}btn-outline-dark{% endif %}">
+               class="kv-filter-pill {% if selected_type == value %}active{% endif %}">
+                {% if value == 'ball' %}<i class="fas fa-volleyball-ball me-1"></i>
+                {% elif value == 'shoes' %}<i class="fas fa-shoe-prints me-1"></i>
+                {% elif value == 'clothing' %}<i class="fas fa-tshirt me-1"></i>
+                {% elif value == 'accessories' %}<i class="fas fa-mitten me-1"></i>{% endif %}
                 {{ label }}
             </a>
-
         {% endfor %}
-
-    </div>
-
-    <!-- PRODUCT COUNT -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-
-        <h5 class="fw-bold mb-0">
-            Danh sách sản phẩm
-        </h5>
-
-        <span class="text-secondary">
-            {{ products|length }} sản phẩm
-        </span>
-
     </div>
 
     <!-- PRODUCT GRID -->
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
-
         {% for product in products %}
-
             <div class="col">
                 {% include 'product_card.html' with product=product %}
             </div>
-
         {% empty %}
-
             <div class="col-12">
-
-                <div class="text-center bg-white rounded-3 p-5 shadow-sm">
-
-                    <i class="fas fa-box-open fa-3x text-secondary mb-3"></i>
-
-                    <h5>Chưa có sản phẩm</h5>
-
-                    <p class="text-secondary">
-                        Danh mục này hiện chưa có sản phẩm.
-                        Bạn hãy quay lại sau nhé!
+                <div class="text-center bg-white rounded-4 p-5 shadow-sm border my-4">
+                    <div class="rounded-circle bg-light d-inline-flex p-4 mb-3 text-secondary" style="font-size: 40px;">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h4 class="fw-bold text-dark">Chưa có sản phẩm nào</h4>
+                    <p class="text-secondary" style="max-width: 400px; margin: 0 auto 20px auto;">
+                        Mục sản phẩm bạn vừa chọn hiện chưa có hàng hoặc đang được cập nhật. Bạn vui lòng xem thêm các danh mục khác nhé!
                     </p>
-
-                    <a href="{% url 'home' %}" class="btn kv-btn">
-                        <i class="fas fa-home"></i>
-                        Về trang chủ
+                    <a href="{% url 'product_list' %}" class="btn btn-dark px-4 py-2 rounded-pill fw-bold">
+                        <i class="fas fa-redo me-1"></i> Xem tất cả sản phẩm
                     </a>
-
                 </div>
-
             </div>
-
         {% endfor %}
-
     </div>
 
 </div>
+
+<style>
+    .kv-filter-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 9px 20px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+
+    .kv-filter-pill:hover {
+        background: #f8fafc;
+        border-color: #0f172a;
+        color: #0f172a;
+        transform: translateY(-1px);
+    }
+
+    .kv-filter-pill.active {
+        background: #0f172a;
+        border-color: #0f172a;
+        color: #ffffff !important;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    }
+</style>
 
 {% endblock %}

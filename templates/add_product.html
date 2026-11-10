@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Thêm sản phẩm mới | King Volleyball{% endblock %}
+{% block title %}Thêm sản phẩm mới | King Volleyball 4.0{% endblock %}
 
 {% block content %}
-<div class="container py-4" style="max-width: 900px;">
+<div class="container py-5" style="max-width: 900px;">
 
+    <!-- BREADCRUMB -->
     <nav aria-label="breadcrumb" class="mb-3">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Bảng quản trị</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm mới</li>
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}" class="text-secondary text-decoration-none">Bảng quản trị</a></li>
+            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Thêm sản phẩm mới</li>
         </ol>
     </nav>
 
@@ -17,11 +18,11 @@
         <div class="card-header bg-dark text-white p-4">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="fw-bold mb-1"><i class="fas fa-plus-circle text-warning me-2"></i>Thêm sản phẩm mới</h4>
-                    <p class="text-white-50 mb-0 small">Điền thông tin để đăng bán sản phẩm bóng chuyền mới lên cửa hàng</p>
+                    <h4 class="fw-bold mb-1"><i class="fas fa-plus-circle text-warning me-2"></i>Thêm sản phẩm mới 4.0</h4>
+                    <p class="text-white-50 mb-0 small">Đăng tải sản phẩm thể thao bóng chuyền mới lên kho bán lẻ</p>
                 </div>
-                <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light btn-sm">
-                    <i class="fas fa-arrow-left me-1"></i> Quay lại Dashboard
+                <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                    <i class="fas fa-arrow-left me-1"></i> Quay lại
                 </a>
             </div>
         </div>
@@ -31,7 +32,7 @@
                 {% csrf_token %}
 
                 {% if form.errors %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
                     <strong>Đã có lỗi xảy ra!</strong> Vui lòng kiểm tra lại các trường bên dưới.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -39,64 +40,64 @@
 
                 <div class="row g-4">
                     <div class="col-12">
-                        <label class="form-label fw-bold text-dark">Tên sản phẩm <span class="text-danger">*</span></label>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Tên sản phẩm <span class="text-danger">*</span></label>
                         {{ form.name }}
-                        {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors.0 }}</div>{% endif %}
+                        {% if form.name.errors %}<div class="text-danger small mt-1">{{ form.name.errors.0 }}</div>{% endif %}
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label fw-bold text-dark">Phân loại sản phẩm <span class="text-danger">*</span></label>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Phân loại sản phẩm <span class="text-danger">*</span></label>
                         {{ form.product_type }}
-                        {% if form.product_type.errors %}<div class="text-danger small">{{ form.product_type.errors.0 }}</div>{% endif %}
+                        {% if form.product_type.errors %}<div class="text-danger small mt-1">{{ form.product_type.errors.0 }}</div>{% endif %}
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label fw-bold text-dark">Nhóm hiển thị</label>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Nhóm hiển thị</label>
                         {{ form.category }}
-                        {% if form.category.errors %}<div class="text-danger small">{{ form.category.errors.0 }}</div>{% endif %}
+                        {% if form.category.errors %}<div class="text-danger small mt-1">{{ form.category.errors.0 }}</div>{% endif %}
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label fw-bold text-dark">Giá bán (VND) <span class="text-danger">*</span></label>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Giá bán (VND) <span class="text-danger">*</span></label>
                         <div class="input-group">
                             {{ form.price }}
-                            <span class="input-group-text">₫</span>
+                            <span class="input-group-text bg-light">₫</span>
                         </div>
-                        {% if form.price.errors %}<div class="text-danger small">{{ form.price.errors.0 }}</div>{% endif %}
+                        {% if form.price.errors %}<div class="text-danger small mt-1">{{ form.price.errors.0 }}</div>{% endif %}
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label fw-bold text-dark">Giảm giá (%)</label>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Giảm giá (%)</label>
                         <div class="input-group">
                             {{ form.discount_percent }}
-                            <span class="input-group-text">%</span>
+                            <span class="input-group-text bg-light">%</span>
                         </div>
-                        {% if form.discount_percent.errors %}<div class="text-danger small">{{ form.discount_percent.errors.0 }}</div>{% endif %}
+                        {% if form.discount_percent.errors %}<div class="text-danger small mt-1">{{ form.discount_percent.errors.0 }}</div>{% endif %}
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label fw-bold text-dark">Mô tả chi tiết</label>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Mô tả chi tiết</label>
                         {{ form.description }}
-                        {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors.0 }}</div>{% endif %}
+                        {% if form.description.errors %}<div class="text-danger small mt-1">{{ form.description.errors.0 }}</div>{% endif %}
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label fw-bold text-dark">Ảnh sản phẩm</label>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Ảnh sản phẩm</label>
                         {{ form.image }}
-                        <small class="text-muted">Chọn file ảnh định dạng JPG, PNG hoặc WEBP.</small>
+                        <small class="text-muted d-block mt-1">Định dạng hỗ trợ: JPG, PNG, WEBP (Khuyến nghị ảnh nền trắng).</small>
                     </div>
 
                     <div class="col-md-6">
                         <div class="row g-3">
                             <div class="col-6">
-                                <label class="form-label fw-bold text-dark">Lượt bán ban đầu</label>
+                                <label class="form-label fw-bold text-dark small text-uppercase">Lượt bán ban đầu</label>
                                 {{ form.sold_count }}
                             </div>
                             <div class="col-6">
-                                <label class="form-label fw-bold text-dark">Đánh giá ban đầu</label>
+                                <label class="form-label fw-bold text-dark small text-uppercase">Đánh giá ban đầu</label>
                                 {{ form.rating }}
                             </div>
-                            <div class="col-12 mt-4">
+                            <div class="col-12 mt-3">
                                 <div class="form-check form-switch fs-5">
                                     {{ form.is_featured }}
                                     <label class="form-check-label fs-6 fw-bold text-dark ms-2" for="{{ form.is_featured.id_for_label }}">
@@ -111,11 +112,11 @@
                 <hr class="my-4">
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary px-4">
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary px-4 rounded-pill">
                         Hủy bỏ
                     </a>
-                    <button type="submit" class="btn btn-warning fw-bold px-5 py-2 shadow-sm">
-                        <i class="fas fa-plus-circle me-1"></i> Thêm vào cửa hàng
+                    <button type="submit" class="btn btn-dark fw-bold px-5 py-3 rounded-pill shadow-sm" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                        <i class="fas fa-plus-circle me-1"></i> Thêm vào kho hàng
                     </button>
                 </div>
             </form>

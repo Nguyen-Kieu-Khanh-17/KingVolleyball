@@ -1,46 +1,46 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Hồ sơ tài khoản | King Volleyball{% endblock %}
+{% block title %}Hồ sơ tài khoản | King Volleyball 4.0{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container py-5">
 
-    <!-- HERO PROFILE HEADER -->
-    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); color: white;">
+    <!-- HERO PROFILE HEADER 4.0 -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden" style="background: linear-gradient(135deg, #090d16 0%, #0f172a 60%, #1e293b 100%); color: white; border: 1px solid rgba(255, 255, 255, 0.08);">
         <div class="card-body p-4 p-md-5">
             <div class="row align-items-center g-4">
                 <div class="col-auto">
-                    <div class="rounded-circle d-flex align-items-center justify-content-center shadow" 
-                         style="width: 88px; height: 88px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: #fff; font-size: 38px; font-weight: bold;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center shadow-lg" 
+                         style="width: 88px; height: 88px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: #fff; font-size: 38px; font-weight: 800; border: 3px solid rgba(255,255,255,0.2);">
                         {{ user.username|first|upper }}
                     </div>
                 </div>
                 <div class="col">
                     <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-                        <h2 class="fw-bold mb-0 text-white">{{ user.username }}</h2>
+                        <h2 class="fw-bold mb-0 text-white" style="letter-spacing: -0.02em;">{{ user.username }}</h2>
                         {% if user.is_superuser %}
                             <span class="badge bg-danger px-3 py-2 rounded-pill"><i class="fas fa-crown me-1"></i> Super Admin</span>
                         {% elif user.is_staff %}
-                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill"><i class="fas fa-user-shield me-1"></i> Quản trị viên</span>
+                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold"><i class="fas fa-shield-alt me-1"></i> Quản trị viên</span>
                         {% else %}
-                            <span class="badge bg-info text-dark px-3 py-2 rounded-pill"><i class="fas fa-user me-1"></i> Thành viên</span>
+                            <span class="badge bg-info text-dark px-3 py-2 rounded-pill fw-bold"><i class="fas fa-user me-1"></i> Thành viên King Club</span>
                         {% endif %}
                     </div>
-                    <p class="mb-2 text-white-50">
-                        <i class="fas fa-envelope me-2"></i>{{ user.email|default:"Chưa có email" }}
+                    <p class="mb-2 text-white-50 small">
+                        <i class="fas fa-envelope me-2 text-warning"></i>{{ user.email|default:"Chưa có email" }}
                         <span class="mx-2">•</span>
-                        <i class="fas fa-calendar-alt me-2"></i>Tham gia: {{ user.date_joined|date:"d/m/Y" }}
+                        <i class="fas fa-calendar-alt me-2 text-warning"></i>Gia nhập: {{ user.date_joined|date:"d/m/Y" }}
                     </p>
                     <div class="d-flex flex-wrap gap-2 mt-3">
                         {% if user.is_staff %}
-                            <a href="{% url 'admin_dashboard' %}" class="btn btn-warning fw-bold px-3 shadow-sm">
+                            <a href="{% url 'admin_dashboard' %}" class="btn btn-warning fw-bold px-3 rounded-pill shadow-sm">
                                 <i class="fas fa-chart-line me-1"></i> Bảng điều khiển Quản trị
                             </a>
-                            <a href="{% url 'add_product' %}" class="btn btn-outline-light px-3">
+                            <a href="{% url 'add_product' %}" class="btn btn-outline-light px-3 rounded-pill">
                                 <i class="fas fa-plus-circle me-1"></i> Thêm sản phẩm
                             </a>
-                            <a href="/admin/" target="_blank" class="btn btn-outline-light px-3">
+                            <a href="/admin/" target="_blank" class="btn btn-outline-light px-3 rounded-pill">
                                 <i class="fas fa-cog me-1"></i> Django Admin
                             </a>
                         {% endif %}
@@ -49,7 +49,7 @@
                 <div class="col-auto ms-auto">
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-danger px-4">
+                        <button type="submit" class="btn btn-outline-danger px-4 rounded-pill">
                             <i class="fas fa-sign-out-alt me-1"></i> Đăng xuất
                         </button>
                     </form>
@@ -75,7 +75,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <span class="text-muted small fw-semibold">Tổng doanh thu</span>
-                            <h4 class="fw-bold text-danger mb-0 mt-1">{{ admin_stats.total_revenue|floatformat:0 }} ₫</h4>
+                            <h4 class="fw-bold text-danger mb-0 mt-1">{{ admin_stats.total_revenue|vnd }} ₫</h4>
                         </div>
                         <div class="rounded-3 p-3 text-danger bg-danger-subtle">
                             <i class="fas fa-wallet fa-lg"></i>
@@ -100,7 +100,7 @@
                 <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <span class="text-muted small fw-semibold">Sản phẩm trong kho</span>
+                            <span class="text-muted small fw-semibold">Sản phẩm kho</span>
                             <h4 class="fw-bold text-success mb-0 mt-1">{{ admin_stats.total_products }}</h4>
                         </div>
                         <div class="rounded-3 p-3 text-success bg-success-subtle">
@@ -113,7 +113,7 @@
                 <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <span class="text-muted small fw-semibold">Người dùng</span>
+                            <span class="text-muted small fw-semibold">Khách hàng</span>
                             <h4 class="fw-bold text-info mb-0 mt-1">{{ admin_stats.total_users }}</h4>
                         </div>
                         <div class="rounded-3 p-3 text-info bg-info-subtle">
@@ -127,8 +127,8 @@
     {% endif %}
 
     <!-- TABBED SETTINGS AND ORDERS -->
-    <div class="card border-0 shadow-sm rounded-4">
-        <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+        <div class="card-header bg-white border-bottom pt-4 px-4 pb-0">
             <ul class="nav nav-tabs card-header-tabs" id="profileTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active fw-bold text-dark" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-pane" type="button" role="tab">
@@ -147,14 +147,14 @@
                 </li>
             </ul>
         </div>
-        <div class="card-body p-4">
+        <div class="card-body p-4 p-md-5">
             <div class="tab-content" id="profileTabContent">
 
                 <!-- TAB 1: THÔNG TIN CÁ NHÂN -->
                 <div class="tab-pane fade show active" id="info-pane" role="tabpanel">
                     <form method="post" action="{% url 'profile' %}">
                         {% csrf_token %}
-                        <div class="row g-3 max-w-700">
+                        <div class="row g-3" style="max-width: 650px;">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold small text-muted">Họ và tên đệm</label>
                                 {{ profile_form.first_name }}
@@ -173,8 +173,8 @@
                                 <small class="text-muted">Tên đăng nhập là định danh duy nhất và không thể thay đổi.</small>
                             </div>
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-warning fw-bold px-4 py-2">
-                                    <i class="fas fa-save me-1"></i> Lưu thông tin
+                                <button type="submit" class="btn btn-dark fw-bold px-4 py-2 rounded-pill" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                                    <i class="fas fa-save me-1"></i> Lưu thông tin hồ sơ
                                 </button>
                             </div>
                         </div>
@@ -199,8 +199,8 @@
                                 <input type="password" name="new_password2" class="form-control" placeholder="Nhập lại mật khẩu mới" required>
                             </div>
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-dark fw-bold px-4 py-2">
-                                    <i class="fas fa-shield-alt me-1"></i> Cập nhật mật khẩu
+                                <button type="submit" class="btn btn-dark fw-bold px-4 py-2 rounded-pill">
+                                    <i class="fas fa-shield-alt me-1"></i> Cập nhật mật khẩu bảo mật
                                 </button>
                             </div>
                         </div>
@@ -224,21 +224,21 @@
                                 <tbody>
                                     {% for order in user_orders %}
                                     <tr>
-                                        <td class="fw-bold text-primary">#{{ order.id }}</td>
-                                        <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                                        <td class="fw-bold text-dark">#{{ order.id }}</td>
+                                        <td class="small text-muted">{{ order.created_at|date:"d/m/Y H:i" }}</td>
                                         <td>
                                             <ul class="list-unstyled mb-0 small">
                                                 {% for item in order.items.all %}
                                                     <li>
-                                                        <i class="fas fa-angle-right text-muted me-1"></i>
+                                                        <i class="fas fa-check-circle text-success me-1"></i>
                                                         <strong>{{ item.product.name|default:"Sản phẩm đã gỡ" }}</strong>
                                                         <span class="text-muted">x {{ item.quantity }}</span>
                                                     </li>
                                                 {% endfor %}
                                             </ul>
                                         </td>
-                                        <td class="fw-bold text-danger">{{ order.total_amount|floatformat:0 }} ₫</td>
-                                        <td><span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">Đã xác nhận</span></td>
+                                        <td class="fw-bold text-danger">{{ order.total_amount|vnd }} ₫</td>
+                                        <td><span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">Đã thanh toán</span></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -247,9 +247,9 @@
                     {% else %}
                         <div class="text-center py-5">
                             <div class="text-muted mb-3" style="font-size: 48px;">🛍️</div>
-                            <h5 class="fw-bold text-muted">Bạn chưa có đơn hàng nào</h5>
+                            <h5 class="fw-bold text-dark">Bạn chưa có đơn hàng nào</h5>
                             <p class="text-muted small">Khám phá các sản phẩm bóng chuyền chất lượng tại cửa hàng ngay hôm nay.</p>
-                            <a href="{% url 'product_list' %}" class="btn btn-warning fw-bold px-4">
+                            <a href="{% url 'product_list' %}" class="btn btn-dark fw-bold px-4 rounded-pill" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
                                 Mua sắm ngay
                             </a>
                         </div>
@@ -261,4 +261,23 @@
     </div>
 
 </div>
+
+<style>
+    .nav-tabs .nav-link {
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding: 12px 20px;
+        color: #64748b;
+        transition: all 0.2s;
+    }
+    .nav-tabs .nav-link:hover {
+        border-color: transparent;
+        color: #0f172a;
+    }
+    .nav-tabs .nav-link.active {
+        color: #0f172a !important;
+        border-color: #0f172a;
+        background: transparent;
+    }
+</style>
 {% endblock %}

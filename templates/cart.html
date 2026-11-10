@@ -1,83 +1,163 @@
-
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Giỏ hàng | King Volleyball{% endblock %}
+{% block title %}Giỏ hàng của bạn | King Volleyball 4.0{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container py-5">
 
-    <h2 class="mb-4">🛒 Giỏ hàng của bạn</h2>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags|default:'info' }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+    <!-- PAGE HEADER -->
+    <div class="mb-4 pb-2 border-bottom d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-bold text-dark mb-1" style="font-size: 28px; letter-spacing: -0.03em;">
+                <i class="fas fa-shopping-bag text-warning me-2"></i>Giỏ Hàng Của Bạn
+            </h1>
+            <p class="text-secondary small mb-0">Quản lý các sản phẩm bạn đã chọn và thanh toán nhanh chóng</p>
+        </div>
+        {% if items %}
+            <span class="badge bg-white text-dark border px-3 py-2 rounded-pill shadow-sm">
+                <strong>{{ items|length }}</strong> món trong giỏ
+            </span>
+        {% endif %}
+    </div>
 
     {% if items %}
-        <form id="checkout-selected-form"
-              method="post"
-              action="{% url 'checkout_selected' %}">
+        <form id="checkout-selected-form" method="post" action="{% url 'checkout_selected' %}">
             {% csrf_token %}
 
-            <div class="list-group">
-                {% for item in items %}
-                    <div class="list-group-item d-flex justify-content-between align-items-center gap-3 flex-wrap">
+            <div class="row g-4 align-items-start">
 
-                        <div class="d-flex align-items-center">
-                            <input
-                                type="checkbox"
-                                name="selected_items"
-                                value="{{ item.id }}"
-                                class="form-check-input me-3"
-                                aria-label="Chọn {{ item.product.name }}"
-                            >
+                <!-- LEFT COLUMN: CART ITEMS LIST -->
+                <div class="col-lg-8">
 
-                            <div>
-                                <strong>{{ item.product.name }}</strong>
-                                <div class="text-muted small">
-                                    Số lượng: {{ item.quantity }}
-                                </div>
-                                <div class="text-success small">
-                                    Giá: {{ item.total_price|floatformat:0 }} ₫
+                    <!-- SELECT ALL BAR -->
+                    <div class="card border-0 shadow-sm rounded-4 p-3 mb-3 bg-white d-flex flex-row align-items-center justify-content-between">
+                        <div class="form-check d-flex align-items-center gap-2 mb-0">
+                            <input class="form-check-input" type="checkbox" id="selectAllCheckbox" checked style="cursor: pointer;">
+                            <label class="form-check-label fw-bold text-dark small" for="selectAllCheckbox" style="cursor: pointer;">
+                                Chọn tất cả ({{ items|length }} sản phẩm)
+                            </label>
+                        </div>
+                        <small class="text-muted">Chọn các món bạn muốn thanh toán</small>
+                    </div>
+
+                    <!-- ITEMS LIST -->
+                    <div class="d-flex flex-column gap-3">
+                        {% for item in items %}
+                            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white position-relative">
+                                <div class="d-flex align-items-center gap-3">
+
+                                    <!-- CHECKBOX -->
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            name="selected_items"
+                                            value="{{ item.id }}"
+                                            class="form-check-input item-checkbox"
+                                            checked
+                                            aria-label="Chọn {{ item.product.name }}"
+                                            style="cursor: pointer; width: 1.25em; height: 1.25em;"
+                                        >
+                                    </div>
+
+                                    <!-- PRODUCT THUMBNAIL -->
+                                    <div class="rounded-3 bg-light p-2 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; flex-shrink: 0;">
+                                        {% if item.product.image %}
+                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                                        {% else %}
+                                            <span style="font-size: 32px;">🏐</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- PRODUCT INFO -->
+                                    <div class="flex-grow-1 min-w-0">
+                                        <a href="{% url 'product_detail' item.product.id %}" class="text-decoration-none text-dark">
+                                            <h6 class="fw-bold mb-1 text-truncate" title="{{ item.product.name }}">
+                                                {{ item.product.name }}
+                                            </h6>
+                                        </a>
+
+                                        <div class="d-flex flex-wrap align-items-center gap-2 small">
+                                            <span class="badge bg-light text-dark border">
+                                                SL: {{ item.quantity }}
+                                            </span>
+                                            <span class="text-muted">
+                                                Đơn giá: {{ item.product.final_price|vnd }} ₫
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- PRICE & REMOVE -->
+                                    <div class="text-end ps-2">
+                                        <div class="fw-bold text-dark fs-6 mb-2">
+                                            {{ item.total_price|vnd }} ₫
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1"
+                                            title="Xóa món này"
+                                            onclick="document.getElementById('remove-{{ item.id }}').submit();">
+                                            <i class="fas fa-trash-alt me-1"></i> Xóa
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="d-flex align-items-center gap-3">
-                            <strong>
-                                {{ item.total_price|floatformat:0 }} ₫
-                            </strong>
-
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-outline-danger"
-                                onclick="document.getElementById('remove-{{ item.id }}').submit();">
-                                Xóa
-                            </button>
-                        </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
-            </div>
 
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
+                    <div class="mt-4">
+                        <a href="{% url 'product_list' %}" class="btn btn-outline-dark rounded-pill px-4">
+                            <i class="fas fa-arrow-left me-2"></i> Tiếp tục mua thêm sản phẩm
+                        </a>
+                    </div>
 
-                <div>
-                    Tổng giỏ hàng:
-                    <strong class="text-danger">
-                        {{ total|floatformat:0 }} ₫
-                    </strong>
                 </div>
 
-                <button type="submit" class="btn btn-success btn-lg">
-                    💳 Thanh toán sản phẩm đã chọn
-                </button>
+                <!-- RIGHT COLUMN: ORDER SUMMARY (STICKY) -->
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top" style="top: 100px;">
+                        <h5 class="fw-bold text-dark mb-3">Tóm tắt đơn hàng</h5>
+
+                        <div class="d-flex justify-content-between mb-2 small text-secondary">
+                            <span>Tạm tính giỏ hàng:</span>
+                            <span class="text-dark fw-semibold">{{ total|vnd }} ₫</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2 small text-secondary">
+                            <span>Phí vận chuyển:</span>
+                            <span class="text-success fw-semibold">Miễn phí 4.0</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3 small text-secondary">
+                            <span>Bảo hành &amp; Đổi trả:</span>
+                            <span class="text-dark fw-semibold">30 ngày miễn phí</span>
+                        </div>
+
+                        <hr class="my-3">
+
+                        <div class="d-flex justify-content-between align-items-baseline mb-4">
+                            <span class="fw-bold text-dark fs-6">Tổng thanh toán:</span>
+                            <span class="fw-bold text-danger fs-4">
+                                {{ total|vnd }} ₫
+                            </span>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark btn-lg w-100 rounded-pill fw-bold py-3 shadow" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                            <i class="fas fa-credit-card me-2"></i> Thanh toán đơn hàng
+                        </button>
+
+                        <div class="mt-3 p-3 bg-light rounded-3 small text-muted">
+                            <i class="fas fa-shield-alt text-success me-1"></i> Giao dịch bảo mật 100% với chuẩn mã hóa thanh toán VietQR.
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </form>
 
+        <!-- HIDDEN REMOVE FORMS -->
         {% for item in items %}
             <form
                 id="remove-{{ item.id }}"
@@ -90,15 +170,39 @@
 
     {% else %}
 
-        <div class="alert alert-info">
-            Giỏ hàng đang trống. Hãy khám phá sản phẩm và thêm món bạn yêu thích.
+        <!-- EMPTY CART STATE -->
+        <div class="text-center bg-white rounded-4 p-5 shadow-sm border my-4">
+            <div class="rounded-circle bg-light d-inline-flex p-4 mb-3 text-secondary" style="font-size: 50px;">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <h3 class="fw-bold text-dark">Giỏ hàng của bạn đang trống</h3>
+            <p class="text-secondary" style="max-width: 450px; margin: 0 auto 24px auto;">
+                Bạn chưa thêm bất kỳ sản phẩm nào vào giỏ. Hãy dạo quanh cửa hàng và chọn những món trang bị ưng ý nhất nhé!
+            </p>
+            <a href="{% url 'product_list' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill fw-bold shadow-sm" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                <i class="fas fa-volleyball-ball me-2"></i> Khám phá sản phẩm ngay
+            </a>
         </div>
-
-        <a href="{% url 'home' %}" class="btn btn-primary">
-            Tiếp tục mua sắm
-        </a>
 
     {% endif %}
 
 </div>
+
+<script>
+    // Select all checkbox handler
+    const selectAll = document.getElementById('selectAllCheckbox');
+    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+
+    if (selectAll) {
+        selectAll.addEventListener('change', function() {
+            itemCheckboxes.forEach(cb => cb.checked = selectAll.checked);
+        });
+        itemCheckboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                const allChecked = Array.from(itemCheckboxes).every(c => c.checked);
+                selectAll.checked = allChecked;
+            });
+        });
+    }
+</script>
 {% endblock %}

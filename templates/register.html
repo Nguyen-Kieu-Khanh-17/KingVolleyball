@@ -1,46 +1,70 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Đăng ký | King Volleyball{% endblock %}
+{% block title %}Đăng ký thành viên | King Volleyball 4.0{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+<div class="container my-5 py-3">
     <div class="row justify-content-center align-items-center g-5">
-        <!-- Cột thông tin giới thiệu (bên trái) -->
+
+        <!-- LEFT COLUMN: COMMUNITY INVITATION -->
         <div class="col-lg-6">
-            <span class="badge bg-secondary mb-2">KING VOLLEYBALL</span>
-            <h1 class="display-4 fw-bold mb-3">Tham gia<br>cùng chúng tôi!</h1>
-            <p class="lead text-muted mb-4">
-                Tạo tài khoản ngay để trải nghiệm mua sắm các sản phẩm bóng chuyền chính hãng, theo dõi đơn hàng và nhận những ưu đãi hấp dẫn.
-            </p>
-            <div class="d-flex flex-column gap-2 text-dark fw-bold">
-                <div><i class="bi bi-check-circle-fill text-success"></i> Đăng ký nhanh chóng và miễn phí</div>
-                <div><i class="bi bi-check-circle-fill text-success"></i> Quản lý đơn hàng dễ dàng</div>
-                <div><i class="bi bi-check-circle-fill text-success"></i> Nhận thông tin khuyến mãi độc quyền</div>
+            <div class="pe-lg-4">
+                <span class="badge bg-dark text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-3" style="font-size: 11px; letter-spacing: 0.05em;">
+                    <i class="fas fa-crown text-warning me-1"></i> Tham gia cộng đồng
+                </span>
+                <h1 class="display-5 fw-bold text-dark mb-3" style="letter-spacing: -0.04em; line-height: 1.15;">
+                    Khởi đầu đam mê cùng <br>
+                    <span style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">King Volleyball 4.0</span>
+                </h1>
+                <p class="lead text-secondary mb-4" style="font-size: 17px; line-height: 1.7;">
+                    Tạo tài khoản miễn phí để nhận ngay voucher giảm 15% cho đơn hàng đầu tiên, lưu các sản phẩm yêu thích và nhận thông tin mẫu giày mới trước 48h.
+                </p>
+
+                <div class="d-flex flex-column gap-3 text-dark fw-semibold mb-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <span>Đăng ký nhanh chóng chỉ trong 30 giây</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <span>Quản lý lịch sử đơn hàng và lưu địa chỉ giao hàng</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <span>Quyền lợi sinh nhật và quà tặng thành viên VIP</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Cột Form đăng ký (bên phải) -->
+        <!-- RIGHT COLUMN: REGISTER FORM -->
         <div class="col-lg-5">
-            <div class="card border-0 shadow-sm p-4 rounded-4">
-                <div class="card-body">
-                    <h3 class="card-title fw-bold mb-1">Đăng ký tài khoản</h3>
-                    <p class="text-muted small mb-4">Điền thông tin bên dưới để tạo tài khoản mới</p>
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                <div class="card-body p-0">
+                    <h3 class="card-title fw-bold text-dark mb-1" style="letter-spacing: -0.02em;">Đăng ký tài khoản</h3>
+                    <p class="text-secondary small mb-4">Điền thông tin bên dưới để tạo tài khoản mới</p>
 
-                    <!-- Hiển thị thông báo (messages) nếu có -->
+                    <!-- FLASH MESSAGES & FORM ERRORS -->
                     {% if messages %}
                         {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-3 small" role="alert">
                                 {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         {% endfor %}
                     {% endif %}
 
                     {% if form.errors %}
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade show rounded-3 small" role="alert">
                             Vui lòng kiểm tra lại thông tin nhập vào bên dưới.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}
 
@@ -48,70 +72,64 @@
                         {% csrf_token %}
                         
                         <div class="mb-3">
-                            <label for="username" class="form-label fw-bold">Tên đăng nhập</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+                            <label for="username" class="form-label fw-bold text-dark small text-uppercase">Tên đăng nhập <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-lg rounded-3 fs-6" id="username" name="username" placeholder="Nhập tên đăng nhập" required autofocus>
                         </div>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label fw-bold">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                            <label for="email" class="form-label fw-bold text-dark small text-uppercase">Địa chỉ Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control form-control-lg rounded-3 fs-6" id="email" name="email" placeholder="name@example.com" required>
                         </div>
 
-                        <!-- Ô Mật khẩu 1 tích hợp nút con mắt -->
+                        <!-- PASSWORD 1 -->
                         <div class="mb-3">
-                            <label for="password1" class="form-label fw-bold">Mật khẩu</label>
+                            <label for="password1" class="form-label fw-bold text-dark small text-uppercase">Mật khẩu <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="password" class="form-control" id="password1" name="password1" placeholder="Nhập mật khẩu" required>
-                                <button class="btn btn-outline-secondary toggle-pwd" type="button" data-target="password1">
+                                <input type="password" class="form-control form-control-lg rounded-start-3 fs-6" id="password1" name="password1" placeholder="Tối thiểu 8 ký tự" required>
+                                <button class="btn btn-outline-secondary rounded-end-3 toggle-pwd" type="button" data-target="password1">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Ô Xác nhận mật khẩu tích hợp nút con mắt -->
-                        <div class="mb-3">
-                            <label for="password2" class="form-label fw-bold">Xác nhận mật khẩu</label>
+                        <!-- PASSWORD 2 -->
+                        <div class="mb-4">
+                            <label for="password2" class="form-label fw-bold text-dark small text-uppercase">Xác nhận mật khẩu <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="password" class="form-control" id="password2" name="password2" placeholder="Nhập lại mật khẩu" required>
-                                <button class="btn btn-outline-secondary toggle-pwd" type="button" data-target="password2">
+                                <input type="password" class="form-control form-control-lg rounded-start-3 fs-6" id="password2" name="password2" placeholder="Nhập lại mật khẩu" required>
+                                <button class="btn btn-outline-secondary rounded-end-3 toggle-pwd" type="button" data-target="password2">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="d-grid gap-2 my-4">
-                            <button type="submit" class="btn btn-primary btn-lg fw-bold">
-                                Đăng ký ngay <i class="bi bi-arrow-right"></i>
+                        <div class="d-grid my-4">
+                            <button type="submit" class="btn btn-dark btn-lg fw-bold rounded-pill py-3 shadow-sm" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                                Đăng ký ngay <i class="fas fa-arrow-right ms-2"></i>
                             </button>
                         </div>
                     </form>
 
-                    <p class="text-center mb-3">
-                        Bạn đã có sẵn tài khoản? <a href="{% url 'login' %}" class="text-decoration-none fw-bold">Đăng nhập</a>
+                    <p class="text-center mb-0 small text-secondary">
+                        Bạn đã có tài khoản rồi? <a href="{% url 'login' %}" class="text-dark fw-bold text-decoration-none">Đăng nhập</a>
                     </p>
 
-                    <hr class="my-3">
-
-                    <p class="text-muted small text-center mb-0">
-                        <i class="bi bi-shield-check"></i> Thông tin của bạn được bảo mật an toàn.
-                    </p>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
-<!-- Script xử lý ẩn/hiện mật khẩu cho trang Đăng ký -->
 <script>
-    document.querySelectorAll('.toggle-pwd').forEach(button => {
-        button.addEventListener('click', function () {
+    document.querySelectorAll('.toggle-pwd').forEach(btn => {
+        btn.addEventListener('click', function () {
             const targetId = this.getAttribute('data-target');
-            const passwordInput = document.getElementById(targetId);
+            const targetInput = document.getElementById(targetId);
             const icon = this.querySelector('i');
-
-            if (passwordInput) {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
+            if (targetInput) {
+                const type = targetInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                targetInput.setAttribute('type', type);
                 icon.classList.toggle('bi-eye');
                 icon.classList.toggle('bi-eye-slash');
             }

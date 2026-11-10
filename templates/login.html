@@ -1,37 +1,62 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Đăng nhập | King Volleyball{% endblock %}
+{% block title %}Đăng nhập | King Volleyball 4.0{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+<div class="container my-5 py-3">
     <div class="row justify-content-center align-items-center g-5">
-        <!-- Cột thông tin giới thiệu (bên trái) -->
+
+        <!-- LEFT COLUMN: BRAND STORY & ETHOS -->
         <div class="col-lg-6">
-            <span class="badge bg-secondary mb-2">KING VOLLEYBALL</span>
-            <h1 class="display-4 fw-bold mb-3">Chào mừng<br>trở lại!</h1>
-            <p class="lead text-muted mb-4">
-                Đăng nhập để khám phá sản phẩm, quản lý giỏ hàng và tiếp tục hành trình cùng đam mê bóng chuyền.
-            </p>
-            <div class="d-flex flex-column gap-2 text-dark fw-bold">
-                <div><i class="bi bi-check-circle-fill text-success"></i> Sản phẩm thể thao chất lượng</div>
-                <div><i class="bi bi-check-circle-fill text-success"></i> Mua sắm thuận tiện</div>
+            <div class="pe-lg-4">
+                <span class="badge bg-dark text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-3" style="font-size: 11px; letter-spacing: 0.05em;">
+                    <i class="fas fa-volleyball-ball text-warning me-1"></i> King Volleyball Club
+                </span>
+                <h1 class="display-5 fw-bold text-dark mb-3" style="letter-spacing: -0.04em; line-height: 1.15;">
+                    Chào mừng bạn <br>
+                    <span style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">quay trở lại!</span>
+                </h1>
+                <p class="lead text-secondary mb-4" style="font-size: 17px; line-height: 1.7;">
+                    Đăng nhập tài khoản để nhận các ưu đãi độc quyền 4.0, lưu trữ giỏ hàng và theo dõi hành trình giao hàng của bạn.
+                </p>
+
+                <div class="d-flex flex-column gap-3 text-dark fw-semibold mb-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Trang thiết bị &amp; Giày bóng chuyền chính hãng 100%</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Bảo hành 1 đổi 1 và hỗ trợ đổi size linh hoạt trong 30 ngày</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Tích điểm thành viên nhận voucher giảm tới 20%</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Cột Form đăng nhập (bên phải) -->
+        <!-- RIGHT COLUMN: LOGIN FORM -->
         <div class="col-lg-5">
-            <div class="card border-0 shadow-sm p-4 rounded-4">
-                <div class="card-body">
-                    <h3 class="card-title fw-bold mb-1">Đăng nhập</h3>
-                    <p class="text-muted small mb-4">Nhập thông tin tài khoản của bạn</p>
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                <div class="card-body p-0">
+                    <h3 class="card-title fw-bold text-dark mb-1" style="letter-spacing: -0.02em;">Đăng nhập</h3>
+                    <p class="text-secondary small mb-4">Nhập tên đăng nhập và mật khẩu để tiếp tục</p>
 
-                    <!-- Hiển thị thông báo (messages) nếu có -->
+                    <!-- FLASH MESSAGES -->
                     {% if messages %}
                         {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-3 small" role="alert">
                                 {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         {% endfor %}
                     {% endif %}
@@ -40,45 +65,46 @@
                         {% csrf_token %}
                         
                         <div class="mb-3">
-                            <label for="username" class="form-label fw-bold">Tên đăng nhập</label>
-                            <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+                            <label for="username" class="form-label fw-bold text-dark small text-uppercase">Tên đăng nhập</label>
+                            <input type="text" class="form-control form-control-lg rounded-3 fs-6" id="username" name="username" placeholder="Nhập username của bạn" required autofocus>
                         </div>
 
-                        <!-- Trường Mật khẩu tích hợp nút con mắt ẩn/hiện -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label fw-bold">Mật khẩu</label>
+                        <!-- PASSWORD WITH TOGGLE EYE -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label fw-bold text-dark small text-uppercase">Mật khẩu</label>
                             <div class="input-group">
-                                <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Nhập mật khẩu" required>
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <input type="password" class="form-control form-control-lg rounded-start-3 fs-6" id="password" name="password" placeholder="Nhập mật khẩu" required>
+                                <button class="btn btn-outline-secondary rounded-end-3" type="button" id="togglePassword">
                                     <i class="bi bi-eye" id="eyeIcon"></i>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="d-grid gap-2 my-4">
-                            <button type="submit" class="btn btn-primary btn-lg fw-bold">
-                                Đăng nhập <i class="bi bi-arrow-right"></i>
+                        <div class="d-grid my-4">
+                            <button type="submit" class="btn btn-dark btn-lg fw-bold rounded-pill py-3 shadow-sm" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border: none;">
+                                Đăng nhập ngay <i class="fas fa-arrow-right ms-2"></i>
                             </button>
                         </div>
                     </form>
 
-                    <p class="text-center mb-3">
-                        Bạn chưa có tài khoản? <a href="{% url 'register' %}" class="text-decoration-none fw-bold">Đăng ký ngay</a>
+                    <p class="text-center mb-4 small text-secondary">
+                        Bạn chưa có tài khoản? <a href="{% url 'register' %}" class="text-dark fw-bold text-decoration-none">Đăng ký thành viên</a>
                     </p>
 
-                    <div class="text-center mt-3 pt-3 border-top">
-                        <span class="text-muted small">Bạn là Quản trị viên?</span>
-                        <a href="{% url 'admin_login' %}" class="btn btn-sm btn-outline-dark fw-bold ms-2 px-3">
-                            <i class="fas fa-shield-alt text-warning me-1"></i> Cổng Đăng Nhập Admin
+                    <div class="text-center pt-3 border-top">
+                        <span class="text-secondary small">Bạn là Quản trị viên?</span>
+                        <a href="{% url 'admin_login' %}" class="btn btn-sm btn-outline-dark fw-bold ms-2 px-3 rounded-pill">
+                            <i class="fas fa-shield-alt text-warning me-1"></i> Cổng Admin
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
-<!-- Script xử lý ẩn/hiện mật khẩu trang Đăng nhập -->
+<!-- Password eye toggle script -->
 <script>
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#password');
